@@ -5,37 +5,37 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import com.yhack.eetutor.R
 import com.yhack.eetutor.activities.Keys
 import com.yhack.eetutor.activities.MainActivity
-import com.yhack.eetutor.databinding.FragmentSignUpBinding
+import com.yhack.eetutor.databinding.FragmentTutorVerifyBinding
 
-class SignUpFragment : Fragment() {
+class TutorVerifyFragment : Fragment() {
 
-    private lateinit var binding: FragmentSignUpBinding
+    private lateinit var binding: FragmentTutorVerifyBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentSignUpBinding.inflate(inflater, container, false)
+        binding = FragmentTutorVerifyBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.mainTextView.text = "You're signing up!"
+        binding.mainTextView.text = "Signing up to be tutor: verifying credentials"
         binding.firstButton.apply {
-            text = "SIGN UP OK >> DASHBOARD"
+            text = "Submit cert, Photo ID"
             setOnClickListener {
                 (requireActivity() as MainActivity).sharedPreferences
                     .edit()
-                    .putInt(Keys.LOGGED_IN, 1)
+                    .putBoolean(Keys.Companion.TUTOR_INIT_VERIFY_DONE, true)
                     .commit()
-                findNavController().apply {
-                    if (currentDestination?.id == R.id.signUpFragment) {
-                        navigate(SignUpFragmentDirections.actionSignUpFragmentToInitSurveyFragment())
+                findNavController().run {
+                    if (currentDestination?.id == R.id.tutorVerifyFragment) {
+                        navigate(TutorVerifyFragmentDirections.actionTutorVerifyFragmentToHomeFragment())
                     }
                 }
             }

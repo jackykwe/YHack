@@ -32,14 +32,27 @@ class StartUpFragment : Fragment() {
         lifecycleScope.launch {
             delay(1000L)  // simulate preparations
 
+            val signedIn: Boolean
+            val initSurveyDone: Boolean
+            val tutorInitVerifyDone: Boolean
+            (requireActivity() as MainActivity).sharedPreferences.run {
+                signedIn = getInt(Keys.LOGGED_IN, Int.MIN_VALUE) != Int.MIN_VALUE
+                initSurveyDone = getBoolean(Keys.INIT_SURVEY_DONE, false)
+                tutorInitVerifyDone = getBoolean(Keys.TUTOR_INIT_VERIFY_DONE, false)
+            }
             findNavController().run {
                 if (currentDestination?.id == R.id.startUpFragment) {
-                    if ((requireActivity() as MainActivity).sharedPreferences.getInt(
-                            Keys.LOGGED_IN,
-                            Int.MIN_VALUE
-                        ) != Int.MIN_VALUE
-                    ) {
-                        navigate(StartUpFragmentDirections.actionStartUpFragmentToDashboardFragment())
+                    if (signedIn) {
+                        if (initSurveyDone) {
+                            val isTutor = false // TODO : TEST
+                            if (isTutor && !tutorInitVerifyDone) {
+                                navigate(StartUpFragmentDirections.actionStartUpFragmentToTutorVerifyFragment())
+                            } else {
+                                navigate(StartUpFragmentDirections.actionStartUpFragmentToHomeFragment())
+                            }
+                        } else {
+                            navigate(StartUpFragmentDirections.actionStartUpFragmentToInitSurveyFragment())
+                        }
                     } else {
                         navigate(StartUpFragmentDirections.actionStartUpFragmentToLoginFragment())
                     }

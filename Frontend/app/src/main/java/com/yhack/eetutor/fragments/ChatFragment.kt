@@ -4,13 +4,12 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import com.yhack.eetutor.R
-import com.yhack.eetutor.databinding.FragmentDashboardBinding
+import com.yhack.eetutor.databinding.FragmentChatBinding
 
-class DashboardFragment : Fragment() {
+class ChatFragment : Fragment() {
 
-    private lateinit var binding: FragmentDashboardBinding
+    private lateinit var binding: FragmentChatBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
@@ -21,23 +20,26 @@ class DashboardFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentDashboardBinding.inflate(inflater)
+        binding = FragmentChatBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.mainTextView.text =
-            "Landing Page"
+        binding.mainTextView.text = "Chats"
         binding.firstButton.apply {
-            text = "Not implemented"
+            text = "View full profile"
             setOnClickListener {
-                Snackbar.make(binding.root, "Hello", Snackbar.LENGTH_INDEFINITE).show()
+                findNavController().run {
+                    if (currentDestination?.id == R.id.chatFragment) {
+                        navigate(ChatFragmentDirections.actionChatFragmentToFullProfileFragment())
+                    }
+                }
             }
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_main, menu)
+        inflater.inflate(R.menu.menu_friends, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -47,11 +49,7 @@ class DashboardFragment : Fragment() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> {
-                findNavController().navigate(DashboardFragmentDirections.actionDashboardFragmentToSettingsFragment())
-                true
-            }
-            R.id.action_friends -> {
-                findNavController().navigate(DashboardFragmentDirections.actionDashboardFragmentToFriendsFragment())
+                findNavController().navigate(ChatFragmentDirections.actionGlobalSettingsFragment())
                 true
             }
             else -> super.onOptionsItemSelected(item)

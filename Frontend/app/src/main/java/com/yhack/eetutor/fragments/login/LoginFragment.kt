@@ -35,7 +35,7 @@ class LoginFragment : Fragment() {
                     .commit()
                 findNavController().apply {
                     if (currentDestination?.id == R.id.loginFragment) {
-                        navigate(LoginFragmentDirections.actionLoginFragmentToDashboardFragment())
+                        navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
                     }
                 }
             }
@@ -53,7 +53,7 @@ class LoginFragment : Fragment() {
         super.onActivityCreated(savedInstanceState)
         (requireActivity() as MainActivity).sharedPreferences
             .edit()
-            .putInt(Keys.LOGGED_IN, Int.MIN_VALUE)
+            .clear()
             .commit()
     }
 }

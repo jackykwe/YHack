@@ -1,16 +1,15 @@
-package com.yhack.eetutor.fragments
+package com.yhack.eetutor.fragments.home
 
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import com.google.android.material.snackbar.Snackbar
 import com.yhack.eetutor.R
-import com.yhack.eetutor.databinding.FragmentFriendsBinding
+import com.yhack.eetutor.databinding.FragmentHomeBinding
 
-class FriendsFragment : Fragment() {
+class HomeFragment : Fragment() {
 
-    private lateinit var binding: FragmentFriendsBinding
+    private lateinit var binding: FragmentHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
@@ -21,23 +20,27 @@ class FriendsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentFriendsBinding.inflate(inflater)
+        binding = FragmentHomeBinding.inflate(inflater)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.mainTextView.text =
-            "Friends"
+            "Landing Page"
         binding.firstButton.apply {
-            text = "Not implemented"
+            text = "Open someone's full profile"
             setOnClickListener {
-                Snackbar.make(binding.root, "Hello", Snackbar.LENGTH_INDEFINITE).show()
+                findNavController().run {
+                    if (currentDestination?.id == R.id.HomeFragment) {
+                        navigate(HomeFragmentDirections.actionHomeFragmentToFullProfileFragment())
+                    }
+                }
             }
         }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_friends, menu)
+        inflater.inflate(R.menu.menu_main, menu)
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -47,7 +50,11 @@ class FriendsFragment : Fragment() {
         // as you specify a parent activity in AndroidManifest.xml.
         return when (item.itemId) {
             R.id.action_settings -> {
-                findNavController().navigate(FriendsFragmentDirections.actionFriendsFragmentToSettingsFragment())
+                findNavController().navigate(HomeFragmentDirections.actionGlobalSettingsFragment())
+                true
+            }
+            R.id.action_friends -> {
+                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToChatFragment())
                 true
             }
             else -> super.onOptionsItemSelected(item)

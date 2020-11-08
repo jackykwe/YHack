@@ -16,6 +16,8 @@ import com.yhack.eetutor.databinding.ActivityMainBinding
 class Keys private constructor() {
     companion object {
         const val LOGGED_IN = "logged_in"
+        const val INIT_SURVEY_DONE = "init_survey_done"
+        const val TUTOR_INIT_VERIFY_DONE = "tutor_init_verify_done"
     }
 }
 
@@ -36,12 +38,13 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(mainActivityBinding.toolbar)
 
         navController = findNavController(R.id.nav_host_fragment)
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.DashboardFragment))
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.HomeFragment))
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->
             mainActivityBinding.toolbar.visibility = when (destination.id) {
-                R.id.startUpFragment, R.id.loginFragment, R.id.signUpFragment -> View.GONE
+                R.id.startUpFragment, R.id.loginFragment, R.id.signUpFragment,
+                R.id.initSurveyFragment, R.id.filterFragment -> View.GONE
                 else -> View.VISIBLE
             }
         }

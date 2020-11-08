@@ -2,6 +2,7 @@ package com.yhack.eetutor.fragments.home
 
 import android.os.Bundle
 import android.view.*
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.yhack.eetutor.R
@@ -21,22 +22,29 @@ class HomeFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater)
-        return binding.root
-    }
 
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.mainTextView.text =
-            "Landing Page"
-        binding.firstButton.apply {
-            text = "Open someone's full profile"
-            setOnClickListener {
-                findNavController().run {
-                    if (currentDestination?.id == R.id.HomeFragment) {
-                        navigate(HomeFragmentDirections.actionHomeFragmentToFullProfileFragment())
+        binding.homeRV.apply {
+            setHasFixedSize(true)
+            adapter = HomeRVAdapter(
+                itemOnClickListener = HomeOnClickListener { view, pid ->
+                    findNavController().run {
+                        Toast.makeText(
+                            requireContext(),
+                            "You chose pid: ${pid}.",
+                            Toast.LENGTH_SHORT
+                        ).show()
+//                        if (currentDestination?.id == R.id.homeFragment) {
+//                            navigate(
+//                                HomeFragmentDirections.actionHomeFragmentToFullProfileFragment()
+//                            )
+//                        }
                     }
                 }
-            }
+            )
         }
+        (binding.homeRV.adapter as HomeRVAdapter).submitList2(listOf(1, 2, 3, 4, 56))
+//        (binding.homeRV.adapter as HomeRVAdapter).submitList2(listOf())
+        return binding.root
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

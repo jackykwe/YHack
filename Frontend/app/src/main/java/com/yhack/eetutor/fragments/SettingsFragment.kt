@@ -23,6 +23,12 @@ class SettingsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.mainTextView.text = "Settings Fragment!"
+        binding.firstButton.apply {
+            text = "Search"
+            setOnClickListener {
+
+            }
+        }
         binding.secondButton.apply {
             text = "Logout"
             setOnClickListener {

@@ -38,7 +38,7 @@ class MainActivity : AppCompatActivity() {
         setSupportActionBar(mainActivityBinding.toolbar)
 
         navController = findNavController(R.id.nav_host_fragment)
-        appBarConfiguration = AppBarConfiguration(setOf(R.id.HomeFragment))
+        appBarConfiguration = AppBarConfiguration(setOf(R.id.homeFragment))
         setupActionBarWithNavController(navController, appBarConfiguration)
 
         navController.addOnDestinationChangedListener { _, destination, _ ->

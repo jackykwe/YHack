@@ -10,14 +10,17 @@ PRAGMA foreign_keys = ON; --for sqlite to enforce foreign key constraints
 CREATE TABLE Person (
 	pid INTEGER PRIMARY KEY,
 	name VARCHAR(50),
+    gender VARCHAR(10),
     dob DATE,
     verified BOOLEAN,
-    personality TEXT,
+    school VARCHAR(30),
+    personality INTEGER,
     academics TEXT
 );
 
 CREATE TABLE Tutor (
     pid INTEGER PRIMARY KEY,
+    fulltime BOOLEAN,
     FOREIGN KEY (pid) REFERENCES Person (pid)
 );
 
@@ -40,7 +43,7 @@ CREATE TABLE Teaches (
 
 CREATE TABLE Subject (
     sid INTEGER PRIMARY KEY,
-    name VARCHAR(20) UNIQUE
+    title VARCHAR(20) UNIQUE
 );
 
 CREATE TABLE Ability (

@@ -1,9 +1,14 @@
 package uk.ac.cam.jk810.yhack20;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.junit.Test;
 
@@ -19,34 +24,42 @@ public class DatabaseTest {
 
     @Test
     public void returnTutor() throws SQLException, EntityNotFoundException {
-        Tutor t = db.getTutor(9);
-        assertEquals(9, t.id);
-        assertEquals("Jacky", t.name);
-        assertEquals("10/04/1999",df.format(t.dob));
-        assertEquals(true, t.verified);
-        assertEquals("Smart", t.personality);
-        assertEquals("{\"Computer Science\":\"A+\"}", t.academics);
-    }
-
-    @Test
-    public void returnTutor9() throws SQLException {
-        Tutor t = db.getTutor9(9);
-        assertEquals(9, t.id);
-        assertEquals("Jacky", t.name);
-        assertEquals("10/04/1999",df.format(t.dob));
-        assertEquals(true, t.verified);
-        assertEquals("Smart", t.personality);
-        assertEquals("{\"Computer Science\":\"A+\"}", t.academics);
+        try (Connection conn = db.connect()) {
+            Tutor t = db.getTutorByID(9);
+            assertEquals(9, t.getId());
+            assertEquals("Jacky", t.getName());
+            assertEquals("10/04/1999", df.format(t.getDob()));
+            assertEquals(true, t.isVerified());
+            assertEquals(13, t.getPersonality());
+            assertEquals("{\"Computer Science\":\"A+\"}", t.getAcademics());
+            assertEquals(0.9, t.getAbility().get("Computer Science"), 0.01);
+            assertEquals(0.9, t.getAbility().get("Math"), 0.01);
+        }
     }
 
     @Test
     public void returnStudent() throws SQLException, EntityNotFoundException {
-        Student t = db.getStudent(1);
-        assertEquals(1, t.id);
-        assertEquals("Andrew", t.name);
-        assertEquals("02/10/1999",df.format(t.dob));
-        assertEquals(false, t.verified);
-        assertEquals("Happy", t.personality);
-        assertEquals("{\"Math\":\"A+\"}", t.academics);
+        try (Connection conn = db.connect()) {
+            Student t = db.getStudentByID(1);
+            assertEquals(1, t.getId());
+            assertEquals("Andrew", t.getName());
+            assertEquals("02/10/1999", df.format(t.getDob()));
+            assertEquals(false, t.isVerified());
+            assertEquals(15, t.getPersonality());
+            assertEquals("{\"Math\":\"A+\"}", t.getAcademics());
+            assertEquals(0.5, t.getAbility().get("Math"), 0.01);
+            assertEquals(0.4, t.getAbility().get("English"), 0.01);
+            assertEquals(0.8, t.getAbility().get("Geography"), 0.01);
+        }
+    }
+
+    @Test
+    public void getFilteredTutors() throws SQLException {
+        try (Connection conn = db.connect()) {
+            Map<String, Double> abilityScores = new HashMap<>();
+            abilityScores.put("Geography", 0.8);
+            ArrayList<Tutor> tutors = db.getTopFilteredTutors(abilityScores, 0.2, "Female", "ACSI", true,0);
+            assertTrue(tutors.stream().map((t)->t.getName()).anyMatch(name->name.equals("Hariot")));
+        }
     }
 }

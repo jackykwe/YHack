@@ -8,7 +8,8 @@ import java.util.Map;
  * Stores details about a person
  */
 public class Person {
-    int id; /** id of the person (internal) */
+    String username; /** userid */
+    String password; /** hashed password */
     String name; /** full name */
     String gender; /** gender of the person */
     Date dob; /** date of birth */
@@ -18,9 +19,9 @@ public class Person {
     String academics; /** JSON string storing academic results */
     Map<String, Double> ability = new HashMap<>(); /** {@link Map} of subject to ML-generated ability score */
 
-    public Person(int id, String name, String gender, Date dob, boolean verified, String school, int personality,
+    public Person(String username, String name, String gender, Date dob, boolean verified, String school, int personality,
             String academics) {
-        this.id = id;
+        this.username = username;
         this.name = name;
         this.gender = gender;
         this.dob = dob;
@@ -30,32 +31,11 @@ public class Person {
         this.academics = academics;
     }
 
-    public Person(String name, String gender, Date dob, boolean verified, String school, int personality,
-            String academics) {
-        this.name = name;
-        this.gender = gender;
-        this.dob = dob;
-        this.verified = verified;
-        this.school = school;
-        this.personality = personality;
-        this.academics = academics;
+    public Person(String username, String password) {
+        this.username = username;
+        this.password = password;
     }
 
-    
-    /** 
-     * @return int
-     */
-    public int getId() {
-        return id;
-    }
-
-    
-    /** 
-     * @param id
-     */
-    public void setId(int id) {
-        this.id = id;
-    }
 
     
     /** 
@@ -185,6 +165,36 @@ public class Person {
         this.ability = ability;
     }
 
+	
+    /** 
+     * @return String
+     */
+    public String getUsername() {
+		return username;
+	}
 
-    
+	
+    /** 
+     * @param username
+     */
+    public void setUsername(String username) {
+		this.username = username;
+	}
+
+	
+    /** 
+     * @return String
+     */
+    public String getPassword() {
+		return password;
+	}
+
+	
+    /** 
+     * @param password
+     */
+    public void setPassword(String password) {
+		this.password = password;
+	}
+
 }

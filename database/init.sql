@@ -8,7 +8,8 @@ DROP TABLE IF EXISTS Person;
 PRAGMA foreign_keys = ON; --for sqlite to enforce foreign key constraints
 
 CREATE TABLE Person (
-	pid INTEGER PRIMARY KEY,
+	pid VARCHAR(20) PRIMARY KEY,
+    password CHAR(16),
 	name VARCHAR(50),
     gender VARCHAR(10),
     dob DATE,
@@ -19,20 +20,20 @@ CREATE TABLE Person (
 );
 
 CREATE TABLE Tutor (
-    pid INTEGER PRIMARY KEY,
+	pid VARCHAR(20) PRIMARY KEY,
     fulltime BOOLEAN,
     FOREIGN KEY (pid) REFERENCES Person (pid)
 );
 
 CREATE TABLE Student (
-    pid INTEGER PRIMARY KEY,
+	pid VARCHAR(20) PRIMARY KEY,
     optin BOOLEAN,
     FOREIGN KEY (pid) REFERENCES Person (pid)
 );
 
 CREATE TABLE Teaches (
-    tid INTEGER,
-    sid INTEGER,
+    tid VARCHAR(20),
+    sid VARCHAR(20),
     like BOOLEAN,
     rating INTEGER,
     chatid INTEGER PRIMARY KEY,
@@ -50,7 +51,7 @@ CREATE TABLE Subject (
 );
 
 CREATE TABLE Ability (
-    pid INTEGER,
+	pid VARCHAR(20),
     sid INTEGER,
     score REAL,
     PRIMARY KEY (pid, sid)

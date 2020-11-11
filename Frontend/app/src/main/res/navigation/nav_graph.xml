@@ -40,13 +40,15 @@
         android:label="Sign Up"
         tools:layout="@layout/fragment_sign_up">
         <action
-            android:id="@+id/action_signUpFragment_to_initSurveyFragment"
-            app:destination="@id/initSurveyFragment"
+            android:id="@+id/action_signUpFragment_to_loginFragment"
+            app:destination="@id/loginFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
         <action
-            android:id="@+id/action_signUpFragment_to_loginFragment"
-            app:destination="@id/loginFragment" />
+            android:id="@+id/action_signUpFragment_to_initIAmADeclarationFragment"
+            app:destination="@id/initIAmADeclarationFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
     <fragment
         android:id="@+id/startUpFragment"
@@ -71,23 +73,6 @@
             app:popExitAnim="@android:anim/fade_out"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_startUpFragment_to_initSurveyFragment"
-            app:destination="@id/initSurveyFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out"
-            app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_startUpFragment_to_tutorVerifyFragment"
-            app:destination="@id/tutorVerifyFragment"
-            app:enterAnim="@android:anim/fade_in"
-            app:exitAnim="@android:anim/fade_out"
-            app:popEnterAnim="@android:anim/fade_in"
-            app:popExitAnim="@android:anim/fade_out"
-            app:popUpTo="@id/nav_graph" />
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
@@ -165,4 +150,13 @@
     <action
         android:id="@+id/action_global_tutorVerifyFragment"
         app:destination="@id/tutorVerifyFragment" />
+    <fragment
+        android:id="@+id/initIAmADeclarationFragment"
+        android:name="com.yhack.eetutor.fragments.login.InitIAmADeclarationFragment"
+        android:label="InitIAmADeclarationFragment"
+        tools:layout="@layout/fragment_init_i_am_a_declaration">
+        <action
+            android:id="@+id/action_initIAmADeclarationFragment_to_initSurveyFragment"
+            app:destination="@id/initSurveyFragment" />
+    </fragment>
 </navigation>

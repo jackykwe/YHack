@@ -10,49 +10,47 @@ import androidx.navigation.findNavController
 import com.yhack.eetutor.R
 import com.yhack.eetutor.activities.Keys
 import com.yhack.eetutor.activities.MainActivity
-import com.yhack.eetutor.databinding.FragmentLoginBinding
+import com.yhack.eetutor.databinding.FragmentInitIAmADeclarationBinding
 
-class LoginFragment : Fragment() {
 
-    private lateinit var binding: FragmentLoginBinding
+class InitIAmADeclarationFragment : Fragment() {
+
+    private lateinit var binding: FragmentInitIAmADeclarationBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentLoginBinding.inflate(inflater, container, false)
+        binding = FragmentInitIAmADeclarationBinding.inflate(inflater, container, false)
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.mainTextView.text = "Log In"
+        binding.mainTextView.text = "I am a..."
         binding.firstButton.apply {
-            text = "Log in"
+            text = "Tutor"
             setOnClickListener {
-                Toast.makeText(
-                    requireContext(),
-                    "Email: ${binding.usernameEditText.text} and Password: ${binding.passwordEditText.text}",
-                    Toast.LENGTH_SHORT
-                ).show()
+                Toast.makeText(requireContext(), "You selected Tutor", Toast.LENGTH_SHORT).show()
                 (requireActivity() as MainActivity).sharedPreferences
                     .edit()
                     .putInt(Keys.LOGGED_IN, 1)
                     .commit()
                 findNavController().apply {
-                    if (currentDestination?.id == R.id.loginFragment) {
-                        navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+                    if (currentDestination?.id == R.id.initIAmADeclarationFragment) {
+                        navigate(InitIAmADeclarationFragmentDirections.actionInitIAmADeclarationFragmentToInitSurveyFragment())
                     }
                 }
             }
         }
 
         binding.secondButton.apply {
-            text = "Sign Up"
+            text = "Tutee"
             setOnClickListener {
-                findNavController().run {
-                    if (currentDestination?.id == R.id.loginFragment) {
-                        navigate(LoginFragmentDirections.actionLoginFragmentToSignUpFragment())
+                Toast.makeText(requireContext(), "You selected Tutee", Toast.LENGTH_SHORT).show()
+                findNavController().apply {
+                    if (currentDestination?.id == R.id.initIAmADeclarationFragment) {
+                        navigate(InitIAmADeclarationFragmentDirections.actionInitIAmADeclarationFragmentToInitSurveyFragment())
                     }
                 }
             }

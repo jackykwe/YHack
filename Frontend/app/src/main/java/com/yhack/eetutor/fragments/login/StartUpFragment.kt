@@ -43,16 +43,17 @@ class StartUpFragment : Fragment() {
             findNavController().run {
                 if (currentDestination?.id == R.id.startUpFragment) {
                     if (signedIn) {
-                        if (initSurveyDone) {
-                            val isTutor = false // TODO : TEST
-                            if (isTutor && !tutorInitVerifyDone) {
-                                navigate(StartUpFragmentDirections.actionStartUpFragmentToTutorVerifyFragment())
-                            } else {
-                                navigate(StartUpFragmentDirections.actionStartUpFragmentToHomeFragment())
-                            }
-                        } else {
-                            navigate(StartUpFragmentDirections.actionStartUpFragmentToInitSurveyFragment())
-                        }
+                        navigate(StartUpFragmentDirections.actionStartUpFragmentToHomeFragment())
+//                        if (initSurveyDone) {
+//                            val isTutor = false // TODO : TEST
+//                            if (isTutor && !tutorInitVerifyDone) {
+//                                navigate(StartUpFragmentDirections.actionStartUpFragmentToTutorVerifyFragment())
+//                            } else {
+//                                navigate(StartUpFragmentDirections.actionStartUpFragmentToHomeFragment())
+//                            }
+//                        } else {
+//                            navigate(StartUpFragmentDirections.actionStartUpFragmentToInitSurveyFragment())
+//                        }
                     } else {
                         navigate(StartUpFragmentDirections.actionStartUpFragmentToLoginFragment())
                     }

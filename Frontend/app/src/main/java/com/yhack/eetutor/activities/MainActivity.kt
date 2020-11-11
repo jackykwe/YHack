@@ -44,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
             mainActivityBinding.toolbar.visibility = when (destination.id) {
                 R.id.startUpFragment, R.id.loginFragment, R.id.signUpFragment,
+                R.id.initIAmADeclarationFragment,
                 R.id.initSurveyFragment, R.id.filterFragment -> View.GONE
                 else -> View.VISIBLE
             }

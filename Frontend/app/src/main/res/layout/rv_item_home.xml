@@ -13,7 +13,7 @@
 
         <variable
             name="onClickListener"
-            type="com.yhack.eetutor.fragments.home.HomeOnClickListener" />
+            type="com.yhack.tutoree.fragments.home.HomeOnClickListener" />
     </data>
 
     <com.google.android.material.card.MaterialCardView

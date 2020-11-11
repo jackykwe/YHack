@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/homeFragment"
-        android:name="com.yhack.eetutor.fragments.home.HomeFragment"
+        android:name="com.yhack.tutoree.fragments.home.HomeFragment"
         android:label="Tutoree"
         tools:layout="@layout/fragment_home">
         <action
@@ -22,7 +22,7 @@
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
-        android:name="com.yhack.eetutor.fragments.login.LoginFragment"
+        android:name="com.yhack.tutoree.fragments.login.LoginFragment"
         android:label="Login"
         tools:layout="@layout/fragment_login">
         <action
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/signUpFragment"
-        android:name="com.yhack.eetutor.fragments.login.SignUpFragment"
+        android:name="com.yhack.tutoree.fragments.login.SignUpFragment"
         android:label="Sign Up"
         tools:layout="@layout/fragment_sign_up">
         <action
@@ -52,7 +52,7 @@
     </fragment>
     <fragment
         android:id="@+id/startUpFragment"
-        android:name="com.yhack.eetutor.fragments.login.StartUpFragment"
+        android:name="com.yhack.tutoree.fragments.login.StartUpFragment"
         android:label="Tutoree"
         tools:layout="@layout/fragment_start_up">
         <action
@@ -76,7 +76,7 @@
     </fragment>
     <fragment
         android:id="@+id/chatFragment"
-        android:name="com.yhack.eetutor.fragments.ChatFragment"
+        android:name="com.yhack.tutoree.fragments.ChatFragment"
         android:label="Chats"
         tools:layout="@layout/fragment_chat">
         <action
@@ -87,7 +87,7 @@
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
-        android:name="com.yhack.eetutor.fragments.SettingsFragment"
+        android:name="com.yhack.tutoree.fragments.SettingsFragment"
         android:label="Settings"
         tools:layout="@layout/fragment_settings" />
     <action
@@ -102,7 +102,7 @@
         app:launchSingleTop="true" />
     <fragment
         android:id="@+id/initTutorInfoFragment"
-        android:name="com.yhack.eetutor.fragments.init.tutor.InitTutorInfoFragment"
+        android:name="com.yhack.tutoree.fragments.init.tutor.InitTutorInfoFragment"
         android:label="Personal Information"
         tools:layout="@layout/fragment_init_tutor_info">
         <action
@@ -111,7 +111,7 @@
     </fragment>
     <fragment
         android:id="@+id/filterFragment"
-        android:name="com.yhack.eetutor.fragments.FilterFragment"
+        android:name="com.yhack.tutoree.fragments.FilterFragment"
         android:label="Filters"
         tools:layout="@layout/fragment_filter">
         <action
@@ -120,7 +120,7 @@
     </fragment>
     <fragment
         android:id="@+id/fullProfileFragment"
-        android:name="com.yhack.eetutor.fragments.FullProfileFragment"
+        android:name="com.yhack.tutoree.fragments.FullProfileFragment"
         android:label="Full Profile: Insert Name"
         tools:layout="@layout/fragment_full_profile">
         <action
@@ -131,7 +131,7 @@
     </fragment>
     <fragment
         android:id="@+id/initTutorVerifyFragment"
-        android:name="com.yhack.eetutor.fragments.init.tutor.InitTutorVerifyFragment"
+        android:name="com.yhack.tutoree.fragments.init.tutor.InitTutorVerifyFragment"
         android:label="Upload Documents"
         tools:layout="@layout/fragment_init_tutor_verify">
         <action
@@ -145,7 +145,7 @@
         app:destination="@id/initTutorVerifyFragment" />
     <fragment
         android:id="@+id/initIAmADeclarationFragment"
-        android:name="com.yhack.eetutor.fragments.init.InitIAmADeclarationFragment"
+        android:name="com.yhack.tutoree.fragments.init.InitIAmADeclarationFragment"
         android:label="Tutor or Tutee?"
         tools:layout="@layout/fragment_init_i_am_a_declaration">
         <action
@@ -157,7 +157,7 @@
     </fragment>
     <fragment
         android:id="@+id/initMBTIQuestionsFragment"
-        android:name="com.yhack.eetutor.fragments.init.InitMBTIQuestionsFragment"
+        android:name="com.yhack.tutoree.fragments.init.InitMBTIQuestionsFragment"
         android:label="MBTI"
         tools:layout="@layout/fragment_init_mbti_questions">
         <action
@@ -168,7 +168,7 @@
     </fragment>
     <fragment
         android:id="@+id/initTuteeInfoFragment"
-        android:name="com.yhack.eetutor.fragments.init.tutee.InitTuteeInfoFragment"
+        android:name="com.yhack.tutoree.fragments.init.tutee.InitTuteeInfoFragment"
         android:label="Personal Information"
         tools:layout="@layout/fragment_init_tutee_info">
         <action
@@ -179,7 +179,7 @@
     </fragment>
     <fragment
         android:id="@+id/initMBTIResultFragment"
-        android:name="com.yhack.eetutor.fragments.init.InitMBTIResultFragment"
+        android:name="com.yhack.tutoree.fragments.init.InitMBTIResultFragment"
         android:label="MBTI Result"
         tools:layout="@layout/fragment_init_mbti_result">
         <action
@@ -190,7 +190,7 @@
     </fragment>
     <fragment
         android:id="@+id/initSubjectCheckboxFragment"
-        android:name="com.yhack.eetutor.fragments.init.InitSubjectCheckboxFragment"
+        android:name="com.yhack.tutoree.fragments.init.InitSubjectCheckboxFragment"
         android:label="Subjects Selection"
         tools:layout="@layout/fragment_init_subject_checkbox">
         <action
@@ -201,7 +201,7 @@
     </fragment>
     <fragment
         android:id="@+id/initExitFragment"
-        android:name="com.yhack.eetutor.fragments.init.InitExitFragment"
+        android:name="com.yhack.tutoree.fragments.init.InitExitFragment"
         android:label="Completing Initialisation"
         tools:layout="@layout/fragment_init_exit">
         <action

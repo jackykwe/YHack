@@ -2,12 +2,9 @@ package uk.ac.cam.jk810.yhack20.model.dbexception;
 
 public class EntityNotFoundException extends Exception {
 
-    /**
-     *
-     */
     private static final long serialVersionUID = 1L;
 
-    private String entity;
+    private String entity; /** name of entity that was not found */
 
     public EntityNotFoundException(String entity) {
         super("No entities of type "+entity+" were found");

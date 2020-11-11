@@ -8,8 +8,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.yhack.eetutor.R
-import com.yhack.eetutor.activities.Keys
-import com.yhack.eetutor.activities.MainActivity
 import com.yhack.eetutor.databinding.FragmentSignUpBinding
 
 class SignUpFragment : Fragment() {
@@ -35,10 +33,6 @@ class SignUpFragment : Fragment() {
                     "Email: ${binding.usernameEditText.text} and Password: ${binding.passwordEditText.text}",
                     Toast.LENGTH_SHORT
                 ).show()
-                (requireActivity() as MainActivity).sharedPreferences
-                    .edit()
-                    .putInt(Keys.LOGGED_IN, 1)
-                    .commit()
                 findNavController().apply {
                     if (currentDestination?.id == R.id.signUpFragment) {
                         navigate(SignUpFragmentDirections.actionSignUpFragmentToInitIAmADeclarationFragment())

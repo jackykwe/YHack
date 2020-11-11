@@ -8,8 +8,6 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.yhack.eetutor.R
-import com.yhack.eetutor.activities.Keys
-import com.yhack.eetutor.activities.MainActivity
 import com.yhack.eetutor.databinding.FragmentInitIAmADeclarationBinding
 
 class InitIAmADeclarationFragment : Fragment() {
@@ -31,13 +29,9 @@ class InitIAmADeclarationFragment : Fragment() {
             text = "Tutor"
             setOnClickListener {
                 Toast.makeText(requireContext(), "You selected Tutor", Toast.LENGTH_SHORT).show()
-                (requireActivity() as MainActivity).sharedPreferences
-                    .edit()
-                    .putInt(Keys.LOGGED_IN, 1)
-                    .commit()
                 findNavController().apply {
                     if (currentDestination?.id == R.id.initIAmADeclarationFragment) {
-                        navigate(InitIAmADeclarationFragmentDirections.actionInitIAmADeclarationFragmentToInitTutorSurveyFragment())
+                        navigate(InitIAmADeclarationFragmentDirections.actionInitIAmADeclarationFragmentToInitTutorInfoFragment())
                     }
                 }
             }
@@ -49,18 +43,10 @@ class InitIAmADeclarationFragment : Fragment() {
                 Toast.makeText(requireContext(), "You selected Tutee", Toast.LENGTH_SHORT).show()
                 findNavController().apply {
                     if (currentDestination?.id == R.id.initIAmADeclarationFragment) {
-                        navigate(InitIAmADeclarationFragmentDirections.actionInitIAmADeclarationFragmentToInitTutorSurveyFragment())
+                        navigate(InitIAmADeclarationFragmentDirections.actionInitIAmADeclarationFragmentToInitTuteeInfoFragment())
                     }
                 }
             }
         }
-    }
-
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        (requireActivity() as MainActivity).sharedPreferences
-            .edit()
-            .clear()
-            .commit()
     }
 }

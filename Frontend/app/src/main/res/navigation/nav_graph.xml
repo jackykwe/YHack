@@ -8,7 +8,7 @@
     <fragment
         android:id="@+id/homeFragment"
         android:name="com.yhack.eetutor.fragments.home.HomeFragment"
-        android:label="eeTuTor"
+        android:label="Tutoree"
         tools:layout="@layout/fragment_home">
         <action
             android:id="@+id/action_HomeFragment_to_chatFragment"
@@ -53,7 +53,7 @@
     <fragment
         android:id="@+id/startUpFragment"
         android:name="com.yhack.eetutor.fragments.login.StartUpFragment"
-        android:label="eeTuTor"
+        android:label="Tutoree"
         tools:layout="@layout/fragment_start_up">
         <action
             android:id="@+id/action_startUpFragment_to_loginFragment"
@@ -101,20 +101,13 @@
         app:destination="@id/settingsFragment"
         app:launchSingleTop="true" />
     <fragment
-        android:id="@+id/initTutorSurveyFragment"
-        android:name="com.yhack.eetutor.fragments.init.InitTutorSurveyFragment"
-        android:label="Survey"
-        tools:layout="@layout/fragment_init_tutor_survey">
+        android:id="@+id/initTutorInfoFragment"
+        android:name="com.yhack.eetutor.fragments.init.tutor.InitTutorInfoFragment"
+        android:label="Personal Information"
+        tools:layout="@layout/fragment_init_tutor_info">
         <action
-            android:id="@+id/action_initTutorSurveyFragment_to_HomeFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true" />
-        <action
-            android:id="@+id/action_initTutorSurveyFragment_to_initTutorVerifyFragment"
-            app:destination="@id/initTutorVerifyFragment"
-            app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_initTutorInfoFragment_to_initTutorVerifyFragment"
+            app:destination="@id/initTutorVerifyFragment" />
     </fragment>
     <fragment
         android:id="@+id/filterFragment"
@@ -139,13 +132,13 @@
     <fragment
         android:id="@+id/initTutorVerifyFragment"
         android:name="com.yhack.eetutor.fragments.init.tutor.InitTutorVerifyFragment"
-        android:label="Verify Credentials"
+        android:label="Upload Documents"
         tools:layout="@layout/fragment_init_tutor_verify">
         <action
-            android:id="@+id/action_initTutorVerifyFragment_to_HomeFragment"
-            app:destination="@id/homeFragment"
-            app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true" />
+            android:id="@+id/action_initTutorVerifyFragment_to_initMBTIQuestionsFragment"
+            app:destination="@id/initMBTIQuestionsFragment"
+            app:popUpTo="@id/initIAmADeclarationFragment"
+            app:popUpToInclusive="false" />
     </fragment>
     <action
         android:id="@+id/action_global_initTutorVerifyFragment"
@@ -153,10 +146,68 @@
     <fragment
         android:id="@+id/initIAmADeclarationFragment"
         android:name="com.yhack.eetutor.fragments.init.InitIAmADeclarationFragment"
-        android:label="InitIAmADeclarationFragment"
+        android:label="Tutor or Tutee?"
         tools:layout="@layout/fragment_init_i_am_a_declaration">
         <action
-            android:id="@+id/action_initIAmADeclarationFragment_to_initTutorSurveyFragment"
-            app:destination="@id/initTutorSurveyFragment" />
+            android:id="@+id/action_initIAmADeclarationFragment_to_initTutorInfoFragment"
+            app:destination="@id/initTutorInfoFragment" />
+        <action
+            android:id="@+id/action_initIAmADeclarationFragment_to_initTuteeInfoFragment"
+            app:destination="@id/initTuteeInfoFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/initMBTIQuestionsFragment"
+        android:name="com.yhack.eetutor.fragments.init.InitMBTIQuestionsFragment"
+        android:label="MBTI"
+        tools:layout="@layout/fragment_init_mbti_questions">
+        <action
+            android:id="@+id/action_initMBTIQuestionsFragment_to_initMBTIResultFragment"
+            app:destination="@id/initMBTIResultFragment"
+            app:popUpTo="@id/initMBTIQuestionsFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/initTuteeInfoFragment"
+        android:name="com.yhack.eetutor.fragments.init.tutee.InitTuteeInfoFragment"
+        android:label="Personal Information"
+        tools:layout="@layout/fragment_init_tutee_info">
+        <action
+            android:id="@+id/action_initTuteeInfoFragment_to_initMBTIQuestionsFragment"
+            app:destination="@id/initMBTIQuestionsFragment"
+            app:popUpTo="@id/initIAmADeclarationFragment"
+            app:popUpToInclusive="false" />
+    </fragment>
+    <fragment
+        android:id="@+id/initMBTIResultFragment"
+        android:name="com.yhack.eetutor.fragments.init.InitMBTIResultFragment"
+        android:label="MBTI Result"
+        tools:layout="@layout/fragment_init_mbti_result">
+        <action
+            android:id="@+id/action_initMBTIResultFragment_to_initSubjectCheckboxFragment"
+            app:destination="@id/initSubjectCheckboxFragment"
+            app:popUpTo="@id/initMBTIResultFragment"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/initSubjectCheckboxFragment"
+        android:name="com.yhack.eetutor.fragments.init.InitSubjectCheckboxFragment"
+        android:label="Subjects Selection"
+        tools:layout="@layout/fragment_init_subject_checkbox">
+        <action
+            android:id="@+id/action_initSubjectCheckboxFragment_to_initExitFragment"
+            app:destination="@id/initExitFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+    <fragment
+        android:id="@+id/initExitFragment"
+        android:name="com.yhack.eetutor.fragments.init.InitExitFragment"
+        android:label="Completing Initialisation"
+        tools:layout="@layout/fragment_init_exit">
+        <action
+            android:id="@+id/action_initExitFragment_to_homeFragment"
+            app:destination="@id/homeFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
     </fragment>
 </navigation>

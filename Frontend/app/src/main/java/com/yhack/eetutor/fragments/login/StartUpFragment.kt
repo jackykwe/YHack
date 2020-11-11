@@ -37,8 +37,6 @@ class StartUpFragment : Fragment() {
             val tutorInitVerifyDone: Boolean
             (requireActivity() as MainActivity).sharedPreferences.run {
                 signedIn = getInt(Keys.LOGGED_IN, Int.MIN_VALUE) != Int.MIN_VALUE
-                initSurveyDone = getBoolean(Keys.INIT_SURVEY_DONE, false)
-                tutorInitVerifyDone = getBoolean(Keys.TUTOR_INIT_VERIFY_DONE, false)
             }
             findNavController().run {
                 if (currentDestination?.id == R.id.startUpFragment) {

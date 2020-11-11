@@ -35,12 +35,12 @@ class LoginFragment : Fragment() {
                     "Email: ${binding.usernameEditText.text} and Password: ${binding.passwordEditText.text}",
                     Toast.LENGTH_SHORT
                 ).show()
-                (requireActivity() as MainActivity).sharedPreferences
-                    .edit()
-                    .putInt(Keys.LOGGED_IN, 1)
-                    .commit()
                 findNavController().apply {
                     if (currentDestination?.id == R.id.loginFragment) {
+                        (requireActivity() as MainActivity).sharedPreferences
+                            .edit()
+                            .putInt(Keys.LOGGED_IN, 1)
+                            .commit()
                         navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
                     }
                 }

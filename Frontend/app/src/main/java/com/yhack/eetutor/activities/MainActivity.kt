@@ -45,7 +45,11 @@ class MainActivity : AppCompatActivity() {
             mainActivityBinding.toolbar.visibility = when (destination.id) {
                 R.id.startUpFragment, R.id.loginFragment, R.id.signUpFragment,
                 R.id.initIAmADeclarationFragment,
-                R.id.initTutorSurveyFragment, R.id.filterFragment -> View.GONE
+                R.id.initTutorInfoFragment, R.id.initTutorVerifyFragment,
+                R.id.initTuteeInfoFragment,
+                R.id.initMBTIQuestionsFragment, R.id.initMBTIResultFragment,
+                R.id.initSubjectCheckboxFragment, R.id.initExitFragment,
+                R.id.filterFragment -> View.GONE
                 else -> View.VISIBLE
             }
         }

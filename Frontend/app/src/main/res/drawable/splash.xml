@@ -4,11 +4,10 @@
 
     <!-- The background color, preferably the same as your normal theme -->
     <item android:drawable="@android:color/white" />
+    <item android:drawable="@drawable/splash_bg" />
 
     <!-- Your product logo - 144dp color version of your app icon -->
     <item
-        android:width="200dp"
-        android:height="200dp"
-        android:drawable="@drawable/mdi_google_classroom"
+        android:drawable="@drawable/splash_icon"
         android:gravity="center" />
 </layer-list>

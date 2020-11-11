@@ -4,6 +4,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.findNavController
 import com.yhack.eetutor.R
@@ -25,17 +26,33 @@ class SignUpFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.mainTextView.text = "You're signing up!"
+        binding.mainTextView.text = "Sign Up"
         binding.firstButton.apply {
-            text = "SIGN UP OK >> DASHBOARD"
+            text = "Sign Up"
             setOnClickListener {
+                Toast.makeText(
+                    requireContext(),
+                    "Email: ${binding.usernameEditText.text} and Password: ${binding.passwordEditText.text}",
+                    Toast.LENGTH_SHORT
+                ).show()
                 (requireActivity() as MainActivity).sharedPreferences
                     .edit()
                     .putInt(Keys.LOGGED_IN, 1)
                     .commit()
                 findNavController().apply {
                     if (currentDestination?.id == R.id.signUpFragment) {
-                        navigate(SignUpFragmentDirections.actionSignUpFragmentToInitSurveyFragment())
+                        navigate(SignUpFragmentDirections.actionSignUpFragmentToInitIAmADeclarationFragment())
+                    }
+                }
+            }
+        }
+
+        binding.secondButton.apply {
+            text = "Log In"
+            setOnClickListener {
+                findNavController().apply {
+                    if (currentDestination?.id == R.id.signUpFragment) {
+                        navigate(SignUpFragmentDirections.actionSignUpFragmentToLoginFragment())
                     }
                 }
             }

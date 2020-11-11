@@ -1,4 +1,4 @@
-package com.yhack.eetutor.fragments.login
+package com.yhack.eetutor.fragments.init
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,18 +9,18 @@ import androidx.navigation.findNavController
 import com.yhack.eetutor.R
 import com.yhack.eetutor.activities.Keys
 import com.yhack.eetutor.activities.MainActivity
-import com.yhack.eetutor.databinding.FragmentInitSurveyBinding
+import com.yhack.eetutor.databinding.FragmentInitTutorSurveyBinding
 
-class InitSurveyFragment : Fragment() {
+class InitTutorSurveyFragment : Fragment() {
 
-    private lateinit var binding: FragmentInitSurveyBinding
+    private lateinit var binding: FragmentInitTutorSurveyBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentInitSurveyBinding.inflate(inflater, container, false)
+        binding = FragmentInitTutorSurveyBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -34,8 +34,8 @@ class InitSurveyFragment : Fragment() {
                     .putBoolean(Keys.INIT_SURVEY_DONE, true)
                     .commit()
                 findNavController().apply {
-                    if (currentDestination?.id == R.id.initSurveyFragment) {
-                        navigate(InitSurveyFragmentDirections.actionInitSurveyFragmentToHomeFragment())
+                    if (currentDestination?.id == R.id.initTutorSurveyFragment) {
+                        navigate(InitTutorSurveyFragmentDirections.actionInitTutorSurveyFragmentToHomeFragment())
                     }
                 }
             }
@@ -49,8 +49,8 @@ class InitSurveyFragment : Fragment() {
                     .putBoolean(Keys.INIT_SURVEY_DONE, true)
                     .commit()
                 findNavController().apply {
-                    if (currentDestination?.id == R.id.initSurveyFragment) {
-                        navigate(InitSurveyFragmentDirections.actionInitSurveyFragmentToTutorVerifyFragment())
+                    if (currentDestination?.id == R.id.initTutorSurveyFragment) {
+                        navigate(InitTutorSurveyFragmentDirections.actionInitTutorSurveyFragmentToInitTutorVerifyFragment())
                     }
                 }
             }

@@ -1,4 +1,4 @@
-package com.yhack.eetutor.fragments.login
+package com.yhack.eetutor.fragments.init.tutor
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,18 +9,19 @@ import androidx.navigation.fragment.findNavController
 import com.yhack.eetutor.R
 import com.yhack.eetutor.activities.Keys
 import com.yhack.eetutor.activities.MainActivity
-import com.yhack.eetutor.databinding.FragmentTutorVerifyBinding
+import com.yhack.eetutor.databinding.FragmentInitTutorVerifyBinding
+import com.yhack.eetutor.fragments.init.InitTutorSurveyFragmentDirections
 
-class TutorVerifyFragment : Fragment() {
+class InitTutorVerifyFragment : Fragment() {
 
-    private lateinit var binding: FragmentTutorVerifyBinding
+    private lateinit var binding: FragmentInitTutorVerifyBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentTutorVerifyBinding.inflate(inflater, container, false)
+        binding = FragmentInitTutorVerifyBinding.inflate(inflater, container, false)
         return binding.root
     }
 
@@ -34,8 +35,8 @@ class TutorVerifyFragment : Fragment() {
                     .putBoolean(Keys.Companion.TUTOR_INIT_VERIFY_DONE, true)
                     .commit()
                 findNavController().run {
-                    if (currentDestination?.id == R.id.tutorVerifyFragment) {
-                        navigate(TutorVerifyFragmentDirections.actionTutorVerifyFragmentToHomeFragment())
+                    if (currentDestination?.id == R.id.initTutorVerifyFragment) {
+                        navigate(InitTutorSurveyFragmentDirections.actionInitTutorSurveyFragmentToHomeFragment())
                     }
                 }
             }

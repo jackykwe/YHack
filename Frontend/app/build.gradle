@@ -4,7 +4,18 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'androidx.navigation.safeargs.kotlin'
 apply plugin: 'kotlin-kapt'  // For Moshi's Codegen
 
+buildscript {
+    repositories {
+        maven { url 'https://google.bintray.com/tensorflow'}
+    }
+}
+
 android {
+    aaptOptions {
+        noCompress "tflite"
+        noCompress "lite"
+    }
+
     compileSdkVersion 30
     buildToolsVersion "30.0.1"
 
@@ -52,6 +63,8 @@ dependencies {
 //    testImplementation 'junit:junit:4.12'
 //    androidTestImplementation 'androidx.test.ext:junit:1.1.1'
 //    androidTestImplementation 'androidx.test.espresso:espresso-core:3.2.0'
+    implementation 'org.tensorflow:tensorflow-android:+'
+    implementation 'org.tensorflow:tensorflow-lite:0.0.0-nightly'
 
     // Retrofit
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'

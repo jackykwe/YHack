@@ -35,11 +35,14 @@ CREATE TABLE Teaches (
     sid INTEGER,
     like BOOLEAN,
     rating INTEGER,
-    chatid INTEGER,
-    PRIMARY KEY (tid, sid),
-    FOREIGN KEY (tid) REFERENCES Person (pid),
-    FOREIGN KEY (sid) REFERENCES Person (pid)
+    chatid INTEGER PRIMARY KEY,
+    UNIQUE (tid, sid),
+    FOREIGN KEY (tid) REFERENCES Tutor (pid),
+    FOREIGN KEY (sid) REFERENCES Student (pid)
 );
+
+CREATE UNIQUE INDEX teaches_index
+ON Teaches(tid,sid);
 
 CREATE TABLE Subject (
     sid INTEGER PRIMARY KEY,

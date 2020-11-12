@@ -41,7 +41,7 @@ class LoginFragment : Fragment() {
                             .edit()
                             .putInt(Keys.LOGGED_IN, 1)
                             .commit()
-                        navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment())
+                        navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment(isTutor = true)) // TODO: Make flexible
                     }
                 }
             }

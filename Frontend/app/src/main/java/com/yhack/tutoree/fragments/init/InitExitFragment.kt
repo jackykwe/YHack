@@ -40,7 +40,7 @@ class InitExitFragment : Fragment() {
                         .edit()
                         .putInt(Keys.LOGGED_IN, 1)
                         .commit()
-                    navigate(InitExitFragmentDirections.actionInitExitFragmentToHomeFragment())
+                    navigate(InitExitFragmentDirections.actionInitExitFragmentToHomeFragment(isTutor = args.isTutor))
                 }
             }
         }

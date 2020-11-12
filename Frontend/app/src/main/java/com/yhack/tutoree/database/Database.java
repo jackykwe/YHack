@@ -7,7 +7,6 @@ import com.yhack.tutoree.database.model.Tutor;
 import com.yhack.tutoree.database.model.dbexception.EntityNotFoundException;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,18 +38,19 @@ public class Database implements AutoCloseable {
         this.url = url;
     }
 
-    /**
-     * Must be called to initiate a connection before any other method. This can be
-     * used inside a try-with-resources block. Otherwise, {@link #close()} must be
-     * called once all transactions are done.
-     *
-     * @return The connection object for use inside a try-with-resources block
-     * @throws SQLException
-     */
-    public Connection connect() throws SQLException {
-        conn = DriverManager.getConnection(url);
-        return conn;
-    }
+//    /**
+//     * Must be called to initiate a connection before any other method. This can be
+//     * used inside a try-with-resources block. Otherwise, {@link #close()} must be
+//     * called once all transactions are done.
+//     *
+//     * @return The connection object for use inside a try-with-resources block
+//     * @throws SQLException
+//     */
+//    @Deprecated
+//    public Connection connect() throws SQLException {
+//        conn = DriverManager.getConnection(url);
+//        return conn;
+//    }
 
     /**
      * Returns the details of a tutor by ID

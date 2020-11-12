@@ -10,6 +10,7 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.yhack.tutoree.R
+import com.yhack.tutoree.activities.MainActivity
 import com.yhack.tutoree.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
@@ -32,6 +33,10 @@ class HomeFragment : Fragment() {
             adapter = HomeRVAdapter(
                 itemOnClickListener = HomeOnClickListener { view, pid ->
                     findNavController().run {
+
+                        (requireActivity() as MainActivity).connection
+
+
                         Toast.makeText(
                             requireContext(),
                             "You chose pid: ${pid}.",
@@ -93,11 +98,7 @@ class HomeFragment : Fragment() {
                 true
             }
             R.id.action_filter -> {
-                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToChatFragment())
-                true
-            }
-            R.id.action_search -> {
-                Toast.makeText(requireContext(), "HI", Toast.LENGTH_LONG).show()
+//                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToChatFragment(args.isTutor))
                 true
             }
             else -> super.onOptionsItemSelected(item)

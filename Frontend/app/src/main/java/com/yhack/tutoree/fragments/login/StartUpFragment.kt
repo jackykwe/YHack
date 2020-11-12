@@ -39,7 +39,11 @@ class StartUpFragment : Fragment() {
             findNavController().run {
                 if (currentDestination?.id == R.id.startUpFragment) {
                     if (signedIn) {
-                        navigate(StartUpFragmentDirections.actionStartUpFragmentToHomeFragment())
+                        navigate(
+                            StartUpFragmentDirections.actionStartUpFragmentToHomeFragment(
+                                isTutor = true
+                            )
+                        ) // TODO: Make flexible
 //                        if (initSurveyDone) {
 //                            val isTutor = false // TODO : TEST
 //                            if (isTutor && !tutorInitVerifyDone) {

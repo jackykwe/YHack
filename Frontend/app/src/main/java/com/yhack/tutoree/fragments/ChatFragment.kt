@@ -4,12 +4,14 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.yhack.tutoree.R
 import com.yhack.tutoree.databinding.FragmentChatBinding
 
 class ChatFragment : Fragment() {
 
     private lateinit var binding: FragmentChatBinding
+    private val args: ChatFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
@@ -31,7 +33,11 @@ class ChatFragment : Fragment() {
             setOnClickListener {
                 findNavController().run {
                     if (currentDestination?.id == R.id.chatFragment) {
-                        navigate(ChatFragmentDirections.actionChatFragmentToFullProfileFragment())
+                        navigate(
+                            ChatFragmentDirections.actionChatFragmentToFullProfileFragment(
+                                isTutor = args.isTutor
+                            )
+                        )
                     }
                 }
             }

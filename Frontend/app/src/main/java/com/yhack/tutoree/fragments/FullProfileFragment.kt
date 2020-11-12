@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.yhack.tutoree.R
 import com.yhack.tutoree.databinding.FragmentFilterBinding
 
 class FullProfileFragment : Fragment() {
 
     private lateinit var binding: FragmentFilterBinding
+    private val args: FullProfileFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -29,7 +31,11 @@ class FullProfileFragment : Fragment() {
             setOnClickListener {
                 findNavController().run {
                     if (currentDestination?.id == R.id.fullProfileFragment) {
-                        navigate(FullProfileFragmentDirections.actionFullProfileFragmentToChatFragment())
+                        navigate(
+                            FullProfileFragmentDirections.actionFullProfileFragmentToChatFragment(
+                                isTutor = args.isTutor
+                            )
+                        )
                     }
                 }
             }

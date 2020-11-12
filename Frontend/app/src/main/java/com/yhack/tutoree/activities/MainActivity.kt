@@ -5,26 +5,32 @@ import android.content.SharedPreferences
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.yhack.tutoree.R
+import com.yhack.tutoree.database.ImportDBFromAssets
 import com.yhack.tutoree.databinding.ActivityMainBinding
 import com.yhack.tutoree.model.GradeModel
-import org.tensorflow.lite.Interpreter
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import java.sql.Connection
+import java.sql.Driver
+import java.sql.DriverManager
+import java.sql.SQLException
 
 class Keys private constructor() {
     companion object {
         const val LOGGED_IN = "logged_in"
-        const val INIT_SURVEY_DONE = "init_survey_done"
-        const val TUTOR_INIT_VERIFY_DONE = "tutor_init_verify_done"
     }
 }
 
 class MainActivity : AppCompatActivity() {
 
+    internal var connection: Connection? = null
 
     fun modelExampleCode() {
         val gradeModel = GradeModel(assets)
@@ -34,17 +40,39 @@ class MainActivity : AppCompatActivity() {
             println(i)
     }
 
-
     internal lateinit var sharedPreferences: SharedPreferences
-    internal lateinit var mainActivityBinding: ActivityMainBinding
+    private lateinit var mainActivityBinding: ActivityMainBinding
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
+
+    private fun setupDBConnection() {
+        lifecycleScope.launch(Dispatchers.IO) {
+            try {
+                DriverManager.registerDriver(
+                    Class.forName("org.sqldroid.SQLDroidDriver").newInstance() as Driver
+                )
+            } catch (e: Exception) {
+                throw RuntimeException("Failed to register SQLDroidDriver")
+            }
+
+            ImportDBFromAssets.importIfNeeded(applicationContext)
+
+            val jdbcUrl = "jdbc:sqldroid:${ImportDBFromAssets.buildDBPath(applicationContext)}"
+            try {
+                connection = DriverManager.getConnection(jdbcUrl)
+            } catch (e: SQLException) {
+                throw RuntimeException(e)
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
         modelExampleCode()
 
+        setupDBConnection()
         super.onCreate(savedInstanceState)
+
         sharedPreferences = getPreferences(Context.MODE_PRIVATE)
         mainActivityBinding = ActivityMainBinding.inflate(layoutInflater)
 
@@ -72,5 +100,16 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    override fun onDestroy() {
+        if (connection != null) {
+            try {
+                connection!!.close()
+            } catch (e: SQLException) {
+                throw RuntimeException(e)
+            }
+        }
+        super.onDestroy()
     }
 }

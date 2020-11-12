@@ -19,6 +19,9 @@
         <action
             android:id="@+id/action_HomeFragment_to_fullProfileFragment"
             app:destination="@id/fullProfileFragment" />
+        <argument
+            android:name="isTutor"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -84,6 +87,9 @@
             app:destination="@id/fullProfileFragment"
             app:popUpTo="@id/fullProfileFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="isTutor"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/settingsFragment"
@@ -117,6 +123,9 @@
         <action
             android:id="@+id/action_filterFragment_to_HomeFragment"
             app:destination="@id/homeFragment" />
+        <argument
+            android:name="isTutor"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/fullProfileFragment"
@@ -128,6 +137,9 @@
             app:destination="@id/chatFragment"
             app:popUpTo="@id/chatFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="isTutor"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/initTutorVerifyFragment"

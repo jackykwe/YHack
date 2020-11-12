@@ -1,12 +1,15 @@
 package com.yhack.tutoree.database;
 // package uk.ac.cam.jk810.yhack20;
 
+import android.annotation.SuppressLint;
+
 import com.yhack.tutoree.database.model.Person;
 import com.yhack.tutoree.database.model.Student;
 import com.yhack.tutoree.database.model.Tutor;
 import com.yhack.tutoree.database.model.dbexception.EntityNotFoundException;
 
 import java.sql.Connection;
+import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -19,14 +22,17 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.stream.Collectors;
 
+@SuppressLint("NewApi")
 public class Database implements AutoCloseable {
 
+    @Deprecated
     private final String url;
     private final String getPeoples = "SELECT * FROM %s NATURAL JOIN Person where pid in (%s)";
     private final String getName = "SELECT * FROM %s NATURAL JOIN Person where name like ?";
     private final String getRating = "SELECT tid as pid, avg(rating) as rating FROM Teaches where tid = ?";
     private final String getSubject = "SELECT * FROM Ability NATURAL JOIN Subject where pid = ?";
     private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    @Deprecated
     private Connection conn;
 
     /**
@@ -34,23 +40,24 @@ public class Database implements AutoCloseable {
      *
      * @param url the url of the db file
      */
+    @Deprecated
     public Database(String url) {
         this.url = url;
     }
 
-//    /**
-//     * Must be called to initiate a connection before any other method. This can be
-//     * used inside a try-with-resources block. Otherwise, {@link #close()} must be
-//     * called once all transactions are done.
-//     *
-//     * @return The connection object for use inside a try-with-resources block
-//     * @throws SQLException
-//     */
-//    @Deprecated
-//    public Connection connect() throws SQLException {
-//        conn = DriverManager.getConnection(url);
-//        return conn;
-//    }
+    /**
+     * Must be called to initiate a connection before any other method. This can be
+     * used inside a try-with-resources block. Otherwise, {@link #close()} must be
+     * called once all transactions are done.
+     *
+     * @return The connection object for use inside a try-with-resources block
+     * @throws SQLException
+     */
+    @Deprecated
+    public Connection connect() throws SQLException {
+        conn = DriverManager.getConnection(url);
+        return conn;
+    }
 
     /**
      * Returns the details of a tutor by ID
@@ -60,8 +67,8 @@ public class Database implements AutoCloseable {
      * @throws SQLException
      * @throws EntityNotFoundException if no tutor with this ID was found
      */
-    public Tutor getTutorByID(String id) throws SQLException, EntityNotFoundException {
-        ArrayList<Tutor> result = getTutorsByIDs(new ArrayList<String>(List.of(id)));
+    public Tutor getTutorByID(Connection conn, String id) throws SQLException, EntityNotFoundException {
+        ArrayList<Tutor> result = getTutorsByIDs(conn, new ArrayList<String>(List.of(id)));
         if (result.size() == 0)
             throw new EntityNotFoundException("Tutor");
         else if (result.size() > 1)
@@ -76,7 +83,7 @@ public class Database implements AutoCloseable {
      * @return An arraylist of tutor objects
      * @throws SQLException
      */
-    public ArrayList<Tutor> getTutorByName(String name) throws SQLException {
+    public ArrayList<Tutor> getTutorByName(Connection conn, String name) throws SQLException {
         PreparedStatement ps = conn.prepareStatement(String.format(this.getName, "Tutor"));
         ps.setString(1, "%" + name + "%");
 
@@ -87,7 +94,7 @@ public class Database implements AutoCloseable {
             pids.add(rs.getString("pid"));
         }
 
-        return getTutorsByIDs(pids);
+        return getTutorsByIDs(conn, pids);
         // ArrayList<Tutor> results = new ArrayList<Tutor>();
         // while (rs.next()) {
         // Tutor tutor = new Tutor(rs.getString("pid"), rs.getString("name"),
@@ -118,8 +125,8 @@ public class Database implements AutoCloseable {
      * @throws SQLException
      * @throws EntityNotFoundException if no student with this ID was found
      */
-    public Student getStudentByID(String id) throws SQLException, EntityNotFoundException {
-        ArrayList<Student> result = getStudentsByIDs(new ArrayList<String>(List.of(id)));
+    public Student getStudentByID(Connection conn, String id) throws SQLException, EntityNotFoundException {
+        ArrayList<Student> result = getStudentsByIDs(conn, new ArrayList<String>(List.of(id)));
         if (result.size() == 0)
             throw new EntityNotFoundException("Student");
         else if (result.size() > 1)
@@ -127,7 +134,7 @@ public class Database implements AutoCloseable {
         return result.get(0);
     }
 
-    ArrayList<Tutor> getTutorsByIDs(ArrayList<String> pids) throws SQLException {
+    ArrayList<Tutor> getTutorsByIDs(Connection conn, ArrayList<String> pids) throws SQLException {
         try {
             PreparedStatement ps = conn.prepareStatement(String.format(this.getPeoples, "Tutor",
                     String.join(",", pids.stream().map(x -> "?").collect(Collectors.toList()))));
@@ -173,7 +180,7 @@ public class Database implements AutoCloseable {
         }
     }
 
-    ArrayList<Student> getStudentsByIDs(ArrayList<String> pids) throws SQLException {
+    ArrayList<Student> getStudentsByIDs(Connection conn, ArrayList<String> pids) throws SQLException {
         try {
             PreparedStatement ps = conn.prepareStatement(String.format(this.getPeoples, "Student",
                     String.join(",", pids.stream().map(x -> "?").collect(Collectors.toList()))));
@@ -224,7 +231,7 @@ public class Database implements AutoCloseable {
      * @return An arraylist of tutors matching the filters
      * @throws SQLException
      */
-    public ArrayList<Tutor> getTopFilteredTutors(Map<String, Double> abilityScores, Double threshold, String gender,
+    public ArrayList<Tutor> getTopFilteredTutors(Connection conn, Map<String, Double> abilityScores, Double threshold, String gender,
                                                  String school, Boolean fulltime, int limit) throws SQLException {
         String baseQuery = "SELECT * FROM Tutor NATURAL JOIN Person";
         String abilityJoin = "JOIN ability as a%d using (pid) join subject as s%d on a%d.sid = s%d.sid";
@@ -291,7 +298,7 @@ public class Database implements AutoCloseable {
             pids.add(rs.getString("pid"));
         }
 
-        return getTutorsByIDs(pids);
+        return getTutorsByIDs(conn, pids);
 
         // ArrayList<Tutor> results = new ArrayList<Tutor>();
         // while (rs.next()) {
@@ -327,7 +334,7 @@ public class Database implements AutoCloseable {
      * @return An arraylist of tutors matching the filters
      * @throws SQLException
      */
-    public ArrayList<Student> getTopFilteredStudents(Map<String, Double> abilityScores, Double threshold, String gender,
+    public ArrayList<Student> getTopFilteredStudents(Connection conn, Map<String, Double> abilityScores, Double threshold, String gender,
                                                      String school, int limit) throws SQLException {
         String baseQuery = "SELECT * FROM Student NATURAL JOIN Person";
         String abilityJoin = "JOIN ability as a%d using (pid) join subject as s%d on a%d.sid = s%d.sid";
@@ -388,7 +395,7 @@ public class Database implements AutoCloseable {
             pids.add(rs.getString("pid"));
         }
 
-        return getStudentsByIDs(pids);
+        return getStudentsByIDs(conn, pids);
         // ArrayList<Student> results = new ArrayList<Student>();
         // while (rs.next()) {
         // Student student = new Student(rs.getString("pid"), rs.getString("name"),
@@ -418,7 +425,7 @@ public class Database implements AutoCloseable {
      * @throws SQLException
      * @throws EntityNotFoundException The given student id was not found
      */
-    public ArrayList<Tutor> getCurrentTutors(String studentID) throws SQLException, EntityNotFoundException {
+    public ArrayList<Tutor> getCurrentTutors(Connection conn, String studentID) throws SQLException, EntityNotFoundException {
         String teachingQuery = "select a.pid as pid from %s as a natural join Person join teaches as c on a.pid=c.%sid join %s as b on b.pid=c.%sid where b.pid = ?";
         PreparedStatement ps = conn.prepareStatement(String.format(teachingQuery, "Tutor", "t", "Student", "s"));
         ps.setString(1, studentID);
@@ -429,7 +436,7 @@ public class Database implements AutoCloseable {
             pids.add(rs.getString("pid"));
         }
 
-        return getTutorsByIDs(pids);
+        return getTutorsByIDs(conn, pids);
     }
 
     /**
@@ -440,7 +447,7 @@ public class Database implements AutoCloseable {
      * @throws SQLException
      * @throws EntityNotFoundException The given tutor was not found
      */
-    public ArrayList<Student> getCurrentStudents(String tutorID) throws SQLException, EntityNotFoundException {
+    public ArrayList<Student> getCurrentStudents(Connection conn, String tutorID) throws SQLException, EntityNotFoundException {
         String teachingQuery = "select a.pid as pid from %s as a natural join Person join teaches as c on a.pid=c.%sid join %s as b on b.pid=c.%sid where b.pid = ?";
         PreparedStatement ps = conn.prepareStatement(String.format(teachingQuery, "Student", "s", "Tutor", "t"));
         ps.setString(1, tutorID);
@@ -451,7 +458,7 @@ public class Database implements AutoCloseable {
             pids.add(rs.getString("pid"));
         }
 
-        return getStudentsByIDs(pids);
+        return getStudentsByIDs(conn, pids);
     }
 
     /**
@@ -462,7 +469,7 @@ public class Database implements AutoCloseable {
      * @return int The ID of the person
      * @throws SQLException
      */
-    public String registerPerson(Person p) throws SQLException {
+    public String registerPerson(Connection conn, Person p) throws SQLException {
         String insertStmt = "INSERT into Person (pid, password) VALUES (?,?)";
 
         conn.setAutoCommit(false);
@@ -512,7 +519,7 @@ public class Database implements AutoCloseable {
      * @throws SQLException
      * @throws EntityNotFoundException
      */
-    public void modifyPerson(Person p) throws SQLException, EntityNotFoundException {
+    public void modifyPerson(Connection conn, Person p) throws SQLException, EntityNotFoundException {
         String updateStmt = "UPDATE Person set name=?, gender=?, dob=?, verified=?, school=?, personality=?, academics=? where pid = ?";
 
         conn.setAutoCommit(false);
@@ -551,7 +558,7 @@ public class Database implements AutoCloseable {
             }
 
             for (Entry<String, Double> score : p.getAbility().entrySet()) {
-                addAbilities(p, score.getKey(), score.getValue());
+                addAbilities(conn, p, score.getKey(), score.getValue());
             }
 
             conn.commit();
@@ -573,7 +580,7 @@ public class Database implements AutoCloseable {
      * @param rating int representing the rating. set to 0 for null
      * @throws SQLException
      */
-    public void updateTeachingStatus(Tutor t, Student s, boolean like, int rating) throws SQLException {
+    public void updateTeachingStatus(Connection conn, Tutor t, Student s, boolean like, int rating) throws SQLException {
         String findTeaching = "SELECT chatid from Teaches where tid = ? and sid = ?";
         PreparedStatement ps = conn.prepareStatement(findTeaching);
 
@@ -597,7 +604,7 @@ public class Database implements AutoCloseable {
         ps.executeUpdate();
     }
 
-    protected void addAbilities(Person p, String subject, double score) throws SQLException {
+    protected void addAbilities(Connection conn, Person p, String subject, double score) throws SQLException {
         String insertAbility = "REPLACE INTO Ability SELECT ?, sid, ? from Subject where title = ?";
         PreparedStatement ps = conn.prepareStatement(insertAbility);
 
@@ -615,6 +622,7 @@ public class Database implements AutoCloseable {
      * @throws SQLException
      */
     @Override
+    @Deprecated
     public void close() throws SQLException {
         if (conn != null) {
             conn.close();

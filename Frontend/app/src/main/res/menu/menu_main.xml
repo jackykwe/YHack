@@ -3,6 +3,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.yhack.tutoree.activities.MainActivity">
     <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/mdi_magnify"
+        android:title="Search"
+        app:actionViewClass="android.widget.SearchView"
+        app:showAsAction="ifRoom" />
+    <item
         android:id="@+id/action_settings"
         android:icon="@drawable/mdi_cog"
         android:orderInCategory="2"
@@ -10,9 +16,9 @@
         app:showAsAction="ifRoom" />
 
     <item
-        android:id="@+id/action_friends"
-        android:icon="@drawable/mdi_account_group"
+        android:id="@+id/action_filter"
+        android:icon="@drawable/mdi_filter_outline"
         android:orderInCategory="1"
-        android:title="@string/action_settings"
+        android:title="Filter"
         app:showAsAction="ifRoom" />
 </menu>

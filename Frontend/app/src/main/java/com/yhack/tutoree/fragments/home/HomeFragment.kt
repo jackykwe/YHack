@@ -1,7 +1,11 @@
 package com.yhack.tutoree.fragments.home
 
+import android.content.Context
 import android.os.Bundle
+import android.util.Log
 import android.view.*
+import android.view.inputmethod.InputMethodManager
+import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
@@ -49,6 +53,33 @@ class HomeFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_main, menu)
+        (menu.getItem(0).actionView as SearchView).apply {
+            queryHint = "Looking for a particular?" // $otherParty?" // TODO: LEFT OFF HERE
+            setOnQueryTextListener(
+                object : SearchView.OnQueryTextListener {
+                    override fun onQueryTextSubmit(p0: String?): Boolean {
+                        binding.root.requestFocus()
+                        // Close the keyboard, if it's open
+                        val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE)
+                                as InputMethodManager
+                        imm.hideSoftInputFromWindow(requireView().windowToken, 0)
+
+                        p0?.let { query ->
+                            Log.d("mememe", "Submitted $query")
+                        }
+                        return true
+                    }
+
+                    override fun onQueryTextChange(p0: String?): Boolean {
+//                        p0?.let { query ->
+//                            if (query.isEmpty()) return@let
+//                            Log.d("mememe", query)
+//                        }
+                        return true
+                    }
+                }
+            )
+        }
         super.onCreateOptionsMenu(menu, inflater)
     }
 
@@ -61,8 +92,12 @@ class HomeFragment : Fragment() {
                 findNavController().navigate(HomeFragmentDirections.actionGlobalSettingsFragment())
                 true
             }
-            R.id.action_friends -> {
+            R.id.action_filter -> {
                 findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToChatFragment())
+                true
+            }
+            R.id.action_search -> {
+                Toast.makeText(requireContext(), "HI", Toast.LENGTH_LONG).show()
                 true
             }
             else -> super.onOptionsItemSelected(item)

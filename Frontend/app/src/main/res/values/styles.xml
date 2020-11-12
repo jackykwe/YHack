@@ -68,4 +68,5 @@
 
     <style name="AppTheme.PopupOverlay" parent="ThemeOverlay.MaterialComponents.Light" />
 
+    <color name="white">#FFF</color>
 </resources>

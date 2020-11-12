@@ -33,8 +33,6 @@ class StartUpFragment : Fragment() {
             delay(1000L)  // simulate preparations
 
             val signedIn: Boolean
-            val initSurveyDone: Boolean
-            val tutorInitVerifyDone: Boolean
             (requireActivity() as MainActivity).sharedPreferences.run {
                 signedIn = getInt(Keys.LOGGED_IN, Int.MIN_VALUE) != Int.MIN_VALUE
             }

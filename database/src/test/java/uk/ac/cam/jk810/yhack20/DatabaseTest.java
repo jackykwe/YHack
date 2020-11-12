@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 import org.junit.Test;
 
+import uk.ac.cam.jk810.yhack20.model.Message;
 import uk.ac.cam.jk810.yhack20.model.Person;
 import uk.ac.cam.jk810.yhack20.model.Student;
 import uk.ac.cam.jk810.yhack20.model.Tutor;
@@ -146,6 +147,13 @@ public class DatabaseTest {
     public void createTeaching() throws SQLException, EntityNotFoundException {
         try (Connection conn = db.connect()) {
             db.updateTeachingStatus(db.getTutorByID("j"), db.getStudentByID("b"), true, 5);
+        }
+    }
+
+    @Test
+    public void openAndCloseChat() throws Exception {
+        try (ChatManager cm = new ChatManager("chat.json")) {
+            cm.getChats().get(1).addMessage(new Message("b", "Testing", new Date()));
         }
     }
 }

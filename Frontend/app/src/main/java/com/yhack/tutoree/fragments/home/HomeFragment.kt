@@ -9,12 +9,12 @@ import android.widget.SearchView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.yhack.tutoree.R
 import com.yhack.tutoree.activities.MainActivity
 import com.yhack.tutoree.databinding.FragmentHomeBinding
 
 class HomeFragment : Fragment() {
-
     private lateinit var binding: FragmentHomeBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {

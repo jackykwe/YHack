@@ -8,9 +8,12 @@ import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.yhack.tutoree.R
+import com.yhack.tutoree.database.model.Person
 import com.yhack.tutoree.databinding.FragmentSignUpBinding
 
 class SignUpFragment : Fragment() {
+
+    lateinit var person : Person
 
     private lateinit var binding: FragmentSignUpBinding
 
@@ -23,11 +26,18 @@ class SignUpFragment : Fragment() {
         return binding.root
     }
 
+    fun updatePerson() {
+        person = Person(binding.usernameEditText.text.toString(), binding.passwordEditText.text.toString())
+//        println(binding.usernameEditText.text)
+//        println(binding.passwordEditText.text)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.mainTextView.text = "Sign Up"
         binding.firstButton.apply {
             text = "Sign Up"
             setOnClickListener {
+                updatePerson()
                 Toast.makeText(
                     requireContext(),
                     "Email: ${binding.usernameEditText.text} and Password: ${binding.passwordEditText.text}",

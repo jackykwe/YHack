@@ -9,7 +9,6 @@ import com.yhack.tutoree.database.model.Tutor;
 import com.yhack.tutoree.database.model.dbexception.EntityNotFoundException;
 
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -25,39 +24,38 @@ import java.util.stream.Collectors;
 @SuppressLint("NewApi")
 public class Database implements AutoCloseable {
 
-    @Deprecated
-    private final String url;
-    private final String getPeoples = "SELECT * FROM %s NATURAL JOIN Person where pid in (%s)";
-    private final String getName = "SELECT * FROM %s NATURAL JOIN Person where name like ?";
-    private final String getRating = "SELECT tid as pid, avg(rating) as rating FROM Teaches where tid = ?";
-    private final String getSubject = "SELECT * FROM Ability NATURAL JOIN Subject where pid = ?";
-    private final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+    //    @Deprecated private final String url;
+    private static final String getPeoples = "SELECT * FROM %s NATURAL JOIN Person where pid in (%s)";
+    private static final String getName = "SELECT * FROM %s NATURAL JOIN Person where name like ?";
+    private static final String getRating = "SELECT tid as pid, avg(rating) as rating FROM Teaches where tid = ?";
+    private static final String getSubject = "SELECT * FROM Ability NATURAL JOIN Subject where pid = ?";
+    private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     @Deprecated
     private Connection conn;
 
-    /**
-     * Creates a database instance
-     *
-     * @param url the url of the db file
-     */
-    @Deprecated
-    public Database(String url) {
-        this.url = url;
-    }
+//    /**
+//     * Creates a database instance
+//     *
+//     * @param url the url of the db file
+//     */
+//    @Deprecated
+//    public Database(String url) {
+//        Database.url = url;
+//    }
 
-    /**
-     * Must be called to initiate a connection before any other method. This can be
-     * used inside a try-with-resources block. Otherwise, {@link #close()} must be
-     * called once all transactions are done.
-     *
-     * @return The connection object for use inside a try-with-resources block
-     * @throws SQLException
-     */
-    @Deprecated
-    public Connection connect() throws SQLException {
-        conn = DriverManager.getConnection(url);
-        return conn;
-    }
+//    /**
+//     * Must be called to initiate a connection before any other method. This can be
+//     * used inside a try-with-resources block. Otherwise, {@link #close()} must be
+//     * called once all transactions are done.
+//     *
+//     * @return The connection object for use inside a try-with-resources block
+//     * @throws SQLException
+//     */
+//    @Deprecated
+//    public Connection connect() throws SQLException {
+//        conn = DriverManager.getConnection(url);
+//        return conn;
+//    }
 
     /**
      * Returns the details of a tutor by ID
@@ -67,7 +65,7 @@ public class Database implements AutoCloseable {
      * @throws SQLException
      * @throws EntityNotFoundException if no tutor with this ID was found
      */
-    public Tutor getTutorByID(Connection conn, String id) throws SQLException, EntityNotFoundException {
+    public static Tutor getTutorByID(Connection conn, String id) throws SQLException, EntityNotFoundException {
         ArrayList<Tutor> result = getTutorsByIDs(conn, new ArrayList<String>(List.of(id)));
         if (result.size() == 0)
             throw new EntityNotFoundException("Tutor");
@@ -83,8 +81,8 @@ public class Database implements AutoCloseable {
      * @return An arraylist of tutor objects
      * @throws SQLException
      */
-    public ArrayList<Tutor> getTutorByName(Connection conn, String name) throws SQLException {
-        PreparedStatement ps = conn.prepareStatement(String.format(this.getName, "Tutor"));
+    public static ArrayList<Tutor> getTutorByName(Connection conn, String name) throws SQLException {
+        PreparedStatement ps = conn.prepareStatement(String.format(Database.getName, "Tutor"));
         ps.setString(1, "%" + name + "%");
 
         ResultSet rs = ps.executeQuery();
@@ -104,7 +102,7 @@ public class Database implements AutoCloseable {
         // rs.getInt("personality"), rs.getString("academics"),
         // rs.getBoolean("fulltime"));
 
-        // ps = conn.prepareStatement(this.getSubject);
+        // ps = conn.prepareStatement(Database.getSubject);
         // ps.setString(1, tutor.getUsername());
 
         // ResultSet subjects = ps.executeQuery();
@@ -125,7 +123,7 @@ public class Database implements AutoCloseable {
      * @throws SQLException
      * @throws EntityNotFoundException if no student with this ID was found
      */
-    public Student getStudentByID(Connection conn, String id) throws SQLException, EntityNotFoundException {
+    public static Student getStudentByID(Connection conn, String id) throws SQLException, EntityNotFoundException {
         ArrayList<Student> result = getStudentsByIDs(conn, new ArrayList<String>(List.of(id)));
         if (result.size() == 0)
             throw new EntityNotFoundException("Student");
@@ -134,9 +132,9 @@ public class Database implements AutoCloseable {
         return result.get(0);
     }
 
-    ArrayList<Tutor> getTutorsByIDs(Connection conn, ArrayList<String> pids) throws SQLException {
+    static ArrayList<Tutor> getTutorsByIDs(Connection conn, ArrayList<String> pids) throws SQLException {
         try {
-            PreparedStatement ps = conn.prepareStatement(String.format(this.getPeoples, "Tutor",
+            PreparedStatement ps = conn.prepareStatement(String.format(Database.getPeoples, "Tutor",
                     String.join(",", pids.stream().map(x -> "?").collect(Collectors.toList()))));
             for (int i = 1; i <= pids.size(); i++) {
                 ps.setString(i, pids.get(i - 1));
@@ -150,7 +148,7 @@ public class Database implements AutoCloseable {
                         dateFormat.parse(rs.getString("dob")), rs.getBoolean("verified"), rs.getString("school"),
                         rs.getInt("personality"), rs.getString("academics"), rs.getBoolean("fulltime"));
 
-                ps = conn.prepareStatement(this.getSubject);
+                ps = conn.prepareStatement(Database.getSubject);
                 ps.setString(1, result.getUsername());
 
                 ResultSet rs2 = ps.executeQuery();
@@ -160,7 +158,7 @@ public class Database implements AutoCloseable {
                 }
                 map.put(result.getUsername(), result);
 
-                ps = conn.prepareStatement(this.getRating);
+                ps = conn.prepareStatement(Database.getRating);
                 ps.setString(1, result.getUsername());
 
                 rs2 = ps.executeQuery();
@@ -180,9 +178,9 @@ public class Database implements AutoCloseable {
         }
     }
 
-    ArrayList<Student> getStudentsByIDs(Connection conn, ArrayList<String> pids) throws SQLException {
+    static ArrayList<Student> getStudentsByIDs(Connection conn, ArrayList<String> pids) throws SQLException {
         try {
-            PreparedStatement ps = conn.prepareStatement(String.format(this.getPeoples, "Student",
+            PreparedStatement ps = conn.prepareStatement(String.format(Database.getPeoples, "Student",
                     String.join(",", pids.stream().map(x -> "?").collect(Collectors.toList()))));
             for (int i = 1; i <= pids.size(); i++) {
                 ps.setString(i, pids.get(i - 1));
@@ -195,7 +193,7 @@ public class Database implements AutoCloseable {
                         dateFormat.parse(rs.getString("dob")), rs.getBoolean("verified"), rs.getString("school"),
                         rs.getInt("personality"), rs.getString("academics"), rs.getBoolean("optin"));
 
-                ps = conn.prepareStatement(this.getSubject);
+                ps = conn.prepareStatement(Database.getSubject);
                 ps.setString(1, result.getUsername());
 
                 ResultSet rs2 = ps.executeQuery();
@@ -231,8 +229,8 @@ public class Database implements AutoCloseable {
      * @return An arraylist of tutors matching the filters
      * @throws SQLException
      */
-    public ArrayList<Tutor> getTopFilteredTutors(Connection conn, Map<String, Double> abilityScores, Double threshold, String gender,
-                                                 String school, Boolean fulltime, int limit) throws SQLException {
+    public static ArrayList<Tutor> getTopFilteredTutors(Connection conn, Map<String, Double> abilityScores, Double threshold, String gender,
+                                                        String school, Boolean fulltime, int limit) throws SQLException {
         String baseQuery = "SELECT * FROM Tutor NATURAL JOIN Person";
         String abilityJoin = "JOIN ability as a%d using (pid) join subject as s%d on a%d.sid = s%d.sid";
         String subjectFilter = "s%d.title = ? and abs(a%d.score - ?)<?";
@@ -309,7 +307,7 @@ public class Database implements AutoCloseable {
         // rs.getInt("personality"), rs.getString("academics"),
         // rs.getBoolean("fulltime"));
 
-        // ps = conn.prepareStatement(this.getSubject);
+        // ps = conn.prepareStatement(Database.getSubject);
         // ps.setString(1, tutor.getUsername());
 
         // ResultSet subjects = ps.executeQuery();
@@ -334,8 +332,8 @@ public class Database implements AutoCloseable {
      * @return An arraylist of tutors matching the filters
      * @throws SQLException
      */
-    public ArrayList<Student> getTopFilteredStudents(Connection conn, Map<String, Double> abilityScores, Double threshold, String gender,
-                                                     String school, int limit) throws SQLException {
+    public static ArrayList<Student> getTopFilteredStudents(Connection conn, Map<String, Double> abilityScores, Double threshold, String gender,
+                                                            String school, int limit) throws SQLException {
         String baseQuery = "SELECT * FROM Student NATURAL JOIN Person";
         String abilityJoin = "JOIN ability as a%d using (pid) join subject as s%d on a%d.sid = s%d.sid";
         String subjectFilter = "s%d.title = ? and abs(a%d.score - ?)<?";
@@ -404,7 +402,7 @@ public class Database implements AutoCloseable {
         // rs.getString("school"),
         // rs.getInt("personality"), rs.getString("academics"), rs.getBoolean("optin"));
 
-        // ps = conn.prepareStatement(this.getSubject);
+        // ps = conn.prepareStatement(Database.getSubject);
         // ps.setString(1, student.getUsername());
 
         // ResultSet subjects = ps.executeQuery();
@@ -425,7 +423,7 @@ public class Database implements AutoCloseable {
      * @throws SQLException
      * @throws EntityNotFoundException The given student id was not found
      */
-    public ArrayList<Tutor> getCurrentTutors(Connection conn, String studentID) throws SQLException, EntityNotFoundException {
+    public static ArrayList<Tutor> getCurrentTutors(Connection conn, String studentID) throws SQLException, EntityNotFoundException {
         String teachingQuery = "select a.pid as pid from %s as a natural join Person join teaches as c on a.pid=c.%sid join %s as b on b.pid=c.%sid where b.pid = ?";
         PreparedStatement ps = conn.prepareStatement(String.format(teachingQuery, "Tutor", "t", "Student", "s"));
         ps.setString(1, studentID);
@@ -447,7 +445,7 @@ public class Database implements AutoCloseable {
      * @throws SQLException
      * @throws EntityNotFoundException The given tutor was not found
      */
-    public ArrayList<Student> getCurrentStudents(Connection conn, String tutorID) throws SQLException, EntityNotFoundException {
+    public static ArrayList<Student> getCurrentStudents(Connection conn, String tutorID) throws SQLException, EntityNotFoundException {
         String teachingQuery = "select a.pid as pid from %s as a natural join Person join teaches as c on a.pid=c.%sid join %s as b on b.pid=c.%sid where b.pid = ?";
         PreparedStatement ps = conn.prepareStatement(String.format(teachingQuery, "Student", "s", "Tutor", "t"));
         ps.setString(1, tutorID);
@@ -469,7 +467,7 @@ public class Database implements AutoCloseable {
      * @return int The ID of the person
      * @throws SQLException
      */
-    public String registerPerson(Connection conn, Person p) throws SQLException {
+    public static String registerPerson(Connection conn, Person p) throws SQLException {
         String insertStmt = "INSERT into Person (pid, password) VALUES (?,?)";
 
         conn.setAutoCommit(false);
@@ -519,7 +517,7 @@ public class Database implements AutoCloseable {
      * @throws SQLException
      * @throws EntityNotFoundException
      */
-    public void modifyPerson(Connection conn, Person p) throws SQLException, EntityNotFoundException {
+    public static void modifyPerson(Connection conn, Person p) throws SQLException, EntityNotFoundException {
         String updateStmt = "UPDATE Person set name=?, gender=?, dob=?, verified=?, school=?, personality=?, academics=? where pid = ?";
 
         conn.setAutoCommit(false);
@@ -580,7 +578,7 @@ public class Database implements AutoCloseable {
      * @param rating int representing the rating. set to 0 for null
      * @throws SQLException
      */
-    public void updateTeachingStatus(Connection conn, Tutor t, Student s, boolean like, int rating) throws SQLException {
+    public static void updateTeachingStatus(Connection conn, Tutor t, Student s, boolean like, int rating) throws SQLException {
         String findTeaching = "SELECT chatid from Teaches where tid = ? and sid = ?";
         PreparedStatement ps = conn.prepareStatement(findTeaching);
 
@@ -604,7 +602,7 @@ public class Database implements AutoCloseable {
         ps.executeUpdate();
     }
 
-    protected void addAbilities(Connection conn, Person p, String subject, double score) throws SQLException {
+    protected static void addAbilities(Connection conn, Person p, String subject, double score) throws SQLException {
         String insertAbility = "REPLACE INTO Ability SELECT ?, sid, ? from Subject where title = ?";
         PreparedStatement ps = conn.prepareStatement(insertAbility);
 

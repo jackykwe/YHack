@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.yhack.tutoree.R
 import com.yhack.tutoree.activities.Keys
 import com.yhack.tutoree.activities.MainActivity
@@ -17,6 +18,7 @@ import kotlinx.coroutines.launch
 class InitExitFragment : Fragment() {
 
     private lateinit var binding: FragmentInitExitBinding
+    private val args: InitExitFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,7 +30,8 @@ class InitExitFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.mainTextView.text = "Your best tutors/tutees are on their way..." // TODO
+        val otherParty = if (args.isTutor) "tutees" else "tutors"
+        binding.mainTextView.text = "Your best $otherParty are on their way..." // TODO
         lifecycleScope.launch {
             delay(1000L)
             findNavController().run {

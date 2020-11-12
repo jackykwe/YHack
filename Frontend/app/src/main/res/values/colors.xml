@@ -3,4 +3,6 @@
     <color name="colorPrimary">#00F</color>
     <color name="colorPrimaryDark">#009</color>
     <color name="colorAccent">#060</color>
+    <color name="mbtiSelected">#BBF</color>
+    <color name="mbtiUnselect">#FFF</color>
 </resources>

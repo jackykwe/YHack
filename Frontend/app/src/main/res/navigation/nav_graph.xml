@@ -165,6 +165,9 @@
             app:destination="@id/initMBTIResultFragment"
             app:popUpTo="@id/initMBTIQuestionsFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="isTutor"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/initTuteeInfoFragment"
@@ -187,6 +190,9 @@
             app:destination="@id/initSubjectCheckboxFragment"
             app:popUpTo="@id/initMBTIResultFragment"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="isTutor"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/initSubjectCheckboxFragment"
@@ -198,6 +204,9 @@
             app:destination="@id/initExitFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="isTutor"
+            app:argType="boolean" />
     </fragment>
     <fragment
         android:id="@+id/initExitFragment"
@@ -209,5 +218,8 @@
             app:destination="@id/homeFragment"
             app:popUpTo="@id/nav_graph"
             app:popUpToInclusive="true" />
+        <argument
+            android:name="isTutor"
+            app:argType="boolean" />
     </fragment>
 </navigation>

@@ -7,6 +7,8 @@
 
     <TextView
         android:id="@+id/mainTextView"
+        android:gravity="center"
+        android:textAppearance="@style/AppTheme.TextAppearance.Headline"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="32dp"
@@ -21,8 +23,7 @@
         android:id="@+id/firstButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:layout_marginBottom="64dp"
+        android:layout_marginVertical="16dp"
         app:layout_constraintBottom_toTopOf="@+id/tuteeIcon"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

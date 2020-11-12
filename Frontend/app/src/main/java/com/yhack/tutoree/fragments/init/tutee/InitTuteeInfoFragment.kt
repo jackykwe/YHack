@@ -29,7 +29,11 @@ class InitTuteeInfoFragment : Fragment() {
             setOnClickListener {
                 findNavController().apply {
                     if (currentDestination?.id == R.id.initTuteeInfoFragment) {
-                        navigate(InitTuteeInfoFragmentDirections.actionInitTuteeInfoFragmentToInitMBTIQuestionsFragment())
+                        navigate(
+                            InitTuteeInfoFragmentDirections.actionInitTuteeInfoFragmentToInitMBTIQuestionsFragment(
+                                isTutor = false
+                            )
+                        )
                     }
                 }
             }

@@ -3,46 +3,140 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/default_bg">
+    android:background="@drawable/default_bg"
+    android:padding="16dp">
 
     <TextView
         android:id="@+id/mainTextView"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/firstButton"
+        android:gravity="center"
+        android:textAppearance="@style/AppTheme.TextAppearance.Headline2"
+        app:layout_constraintBottom_toTopOf="@+id/englishButton"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_chainStyle="spread" />
+        app:layout_constraintVertical_bias="0.75" />
+
+    <Button
+        android:id="@+id/chineseButton"
+        style="@style/AppTheme.SubjectCheckbox"
+        android:tag="Chinese"
+        android:text="Chinese"
+        app:layout_constraintBottom_toBottomOf="@+id/englishButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/englishButton"
+        app:layout_constraintTop_toTopOf="@+id/englishButton"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/mathButton"
+        style="@style/AppTheme.SubjectCheckbox"
+        android:tag="Math"
+        android:text="Math"
+        app:layout_constraintBottom_toTopOf="@+id/chemistryButton"
+        app:layout_constraintEnd_toStartOf="@+id/englishButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_chainStyle="packed" />
+
+    <Button
+        android:id="@+id/englishButton"
+        style="@style/AppTheme.SubjectCheckbox"
+        android:layout_marginHorizontal="16dp"
+        android:tag="English"
+        android:text="English"
+        app:layout_constraintBottom_toBottomOf="@+id/mathButton"
+        app:layout_constraintEnd_toStartOf="@+id/chineseButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/mathButton"
+        app:layout_constraintTop_toTopOf="@+id/mathButton"
+        app:layout_constraintVertical_bias="0.0" />
+
+
+    <Button
+        android:id="@+id/biologyButton"
+        style="@style/AppTheme.SubjectCheckbox"
+        android:tag="Biology"
+        android:text="Biology"
+        app:layout_constraintBottom_toBottomOf="@+id/physicsButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/physicsButton"
+        app:layout_constraintTop_toTopOf="@+id/physicsButton"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/chemistryButton"
+        style="@style/AppTheme.SubjectCheckbox"
+        android:layout_marginVertical="16dp"
+        android:tag="Chemistry"
+        android:text="Chemistry"
+        app:layout_constraintBottom_toTopOf="@+id/historyButton"
+        app:layout_constraintEnd_toStartOf="@+id/physicsButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/mathButton" />
+
+    <Button
+        android:id="@+id/physicsButton"
+        style="@style/AppTheme.SubjectCheckbox"
+        android:layout_width="0dp"
+        android:layout_marginHorizontal="16dp"
+        android:tag="Physics"
+        android:text="Physics"
+        app:layout_constraintBottom_toBottomOf="@+id/chemistryButton"
+        app:layout_constraintEnd_toStartOf="@+id/biologyButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/chemistryButton"
+        app:layout_constraintTop_toTopOf="@+id/chemistryButton"
+        app:layout_constraintVertical_bias="0.0" />
+
+    <Button
+        android:id="@+id/historyButton"
+        style="@style/AppTheme.SubjectCheckbox"
+        android:tag="History"
+        android:text="History"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toStartOf="@+id/geographyButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/chemistryButton" />
+
+    <Button
+        android:id="@+id/geographyButton"
+        style="@style/AppTheme.SubjectCheckbox"
+        android:layout_marginHorizontal="16dp"
+        android:tag="Geography"
+        android:text="Geography"
+        app:layout_constraintBottom_toBottomOf="@+id/historyButton"
+        app:layout_constraintEnd_toStartOf="@+id/literatureButton"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/historyButton"
+        app:layout_constraintTop_toTopOf="@+id/historyButton" />
+
+    <Button
+        android:id="@+id/literatureButton"
+        style="@style/AppTheme.SubjectCheckbox"
+        android:tag="Literature"
+        android:text="Literature"
+        app:layout_constraintBottom_toBottomOf="@+id/geographyButton"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
+        app:layout_constraintStart_toEndOf="@+id/geographyButton"
+        app:layout_constraintTop_toTopOf="@+id/geographyButton" />
 
     <Button
         android:id="@+id/firstButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/secondButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/mainTextView" />
-
-    <Button
-        android:id="@+id/secondButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        app:layout_constraintBottom_toTopOf="@+id/thirdButton"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/firstButton" />
-
-    <Button
-        android:id="@+id/thirdButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/secondButton" />
+        app:layout_constraintTop_toBottomOf="@+id/geographyButton" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>

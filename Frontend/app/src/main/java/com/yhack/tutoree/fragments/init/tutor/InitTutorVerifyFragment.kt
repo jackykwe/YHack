@@ -29,7 +29,11 @@ class InitTutorVerifyFragment : Fragment() {
             setOnClickListener {
                 findNavController().run {
                     if (currentDestination?.id == R.id.initTutorVerifyFragment) {
-                        navigate(InitTutorVerifyFragmentDirections.actionInitTutorVerifyFragmentToInitMBTIQuestionsFragment())
+                        navigate(
+                            InitTutorVerifyFragmentDirections.actionInitTutorVerifyFragmentToInitMBTIQuestionsFragment(
+                                isTutor = true
+                            )
+                        )
                     }
                 }
             }

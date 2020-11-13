@@ -38,7 +38,7 @@ class InitExitFragment : Fragment() {
                 if (currentDestination?.id == R.id.initExitFragment) {
                     (requireActivity() as MainActivity).sharedPreferences
                         .edit()
-                        .putInt(Keys.LOGGED_IN, 1)
+                        .putString(Keys.LOGGED_IN, args.person.username)
                         .commit()
                     navigate(InitExitFragmentDirections.actionInitExitFragmentToHomeFragment(isTutor = args.isTutor))
                 }

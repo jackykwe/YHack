@@ -47,7 +47,7 @@ class InitSubjectCheckboxFragment : Fragment() {
         }
     }
 
-    private fun saveToDatabase() {
+    private fun saveToDatabase(): Person {
         val personUpdated: Person = if (args.isTutor) {
             // Tutor logic
             (args.person as Tutor).apply {
@@ -62,6 +62,7 @@ class InitSubjectCheckboxFragment : Fragment() {
         val connection = (requireActivity() as MainActivity).connection
         Database.registerPerson(connection, personUpdated)
         Database.modifyPerson(connection, personUpdated)
+        return personUpdated
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -89,12 +90,13 @@ class InitSubjectCheckboxFragment : Fragment() {
                     ).show()
                 } else {
                     // Save to database
-                    saveToDatabase()
+                    val updatedPerson = saveToDatabase()
                     findNavController().apply {
                         if (currentDestination?.id == R.id.initSubjectCheckboxFragment) {
                             navigate(
                                 InitSubjectCheckboxFragmentDirections.actionInitSubjectCheckboxFragmentToInitExitFragment(
-                                    isTutor = args.isTutor
+                                    isTutor = args.isTutor,
+                                    person = updatedPerson
                                 )
                             )
                         }

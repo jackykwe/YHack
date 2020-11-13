@@ -242,6 +242,9 @@
         <argument
             android:name="isTutor"
             app:argType="boolean" />
+        <argument
+            android:name="person"
+            app:argType="com.yhack.tutoree.database.model.Person" />
     </fragment>
     <dialog
         android:id="@+id/filterFragment"

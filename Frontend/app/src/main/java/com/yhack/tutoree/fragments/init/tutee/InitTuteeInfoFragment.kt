@@ -24,27 +24,6 @@ class InitTuteeInfoFragment : Fragment() {
         binding = FragmentInitTuteeInfoBinding.inflate(inflater, container, false)
         return binding.root
     }
-//    fun updatePerson() {
-//        val firstName = binding.firstNameEditText.text.trim().toString()
-//        val lastName = binding.lastNameEditText.text.trim().toString()
-//        val address = binding.addressEditText.text.trim()
-//            .toString()  // TODO: Not yet saved in database
-//        val dateOfBirth = binding.dobEditText.text.trim().toString()
-//        val gender = binding.genderEditText.text.trim().toString()
-//        val school = binding.schoolEditText.text.trim().toString()
-//        val mrExamGrades = binding.mostRecentExamGradesEditText.text.trim().toString()
-//        val consent = binding.consentCheckBox.isChecked
-//        person = Person(
-//            name = "$firstName $lastName",
-//            dob = Date(System.currentTimeMillis()),  // TODO: current dateOfBirth field isn't checked for valid date
-//            gender = gender,
-//            school = school,
-//            academics = mrExamGrades,
-//            isOptin = consent,
-//
-//        )
-//
-//    }
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.mainTextView.text = "Personal Information"
         binding.firstButton.apply {

@@ -53,7 +53,6 @@ public class Person implements Serializable {
      * {@link Map} of subject to ML-generated ability score
      */
     Map<String, Double> ability = new HashMap<>();
-
     /**
      * Subjects that the person is offering to teach/learn
      */
@@ -182,6 +181,18 @@ public class Person implements Serializable {
         return academics;
     }
 
+    /**
+     * @return Academics Object
+     */
+    public Academics getAcademicsObj() {
+        Academics acads = new Academics();
+        try {
+            acads = Academics.stringParser(academics);
+        }catch( Exception e ){
+            e.printStackTrace();
+        }
+        return acads;
+    }
 
     /**
      * @param academics

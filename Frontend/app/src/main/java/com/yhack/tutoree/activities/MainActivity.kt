@@ -13,14 +13,15 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.yhack.tutoree.R
 import com.yhack.tutoree.database.ImportDBFromAssets
+import com.yhack.tutoree.database.model.Academics
 import com.yhack.tutoree.databinding.ActivityMainBinding
-import com.yhack.tutoree.model.GradeModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.sql.Connection
 import java.sql.Driver
 import java.sql.DriverManager
 import java.sql.SQLException
+import java.util.*
 
 class Keys private constructor() {
     companion object {
@@ -32,13 +33,13 @@ class MainActivity : AppCompatActivity() {
 
     internal var connection: Connection? = null
 
-    fun modelExampleCode() {
-        val gradeModel = GradeModel(assets)
-        val arr = FloatArray(18)
-        val output = gradeModel.predict(arr)
-        for (i in output)
-            println(i)
-    }
+//    fun modelExampleCode() {
+//        val gradeModel = GradeModel(assets)
+//        val arr = FloatArray(18)
+//        val output = gradeModel.predict(arr)
+//        for (i in output)
+//            println(i)
+//    }
 
     internal lateinit var sharedPreferences: SharedPreferences
     private lateinit var mainActivityBinding: ActivityMainBinding
@@ -68,7 +69,20 @@ class MainActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
-        modelExampleCode()
+//        modelExampleCode()
+
+//        val interest = ArrayList(Arrays.asList("run", "swim"))
+//        val activities = ArrayList(Arrays.asList("chem", "phys"))
+//        val grade: MutableMap<String, ArrayList<Int>> = HashMap()
+//        val res = ArrayList(Arrays.asList(1, 2, 3))
+//        grade["olvl"] = res
+//        grade["alvl"] = res
+//        val myacads = Academics(activities, interest, grade)
+//        println(myacads.toString())
+//        val temp = Academics.stringParser(myacads.toString());
+//        println(temp.activities[0])
+//        println(myacads)
+
 
         setupDBConnection()
         super.onCreate(savedInstanceState)

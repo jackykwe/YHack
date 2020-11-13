@@ -653,6 +653,21 @@ public class Database implements AutoCloseable {
         ps.executeUpdate();
     }
 
+    public static int getChatid(Connection conn, Tutor t, Student s) throws EntityNotFoundException, SQLException {
+        final String getChat = "SELECT chatid from Teaches where tid = ? and sid = ?";
+        PreparedStatement ps = conn.prepareStatement(getChat);
+
+        ps.setString(1,t.getUsername());
+        ps.setString(2,s.getUsername());
+
+        ResultSet rs = ps.executeQuery();
+
+        if (rs.next()) {
+            return rs.getInt("chatid");
+        }
+        throw new EntityNotFoundException("Chat");
+    }
+
 
     /**
      * Closes the connection. Automatically called if used in a try-with-resources

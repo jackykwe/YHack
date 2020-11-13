@@ -668,7 +668,26 @@ public class Database implements AutoCloseable {
         throw new EntityNotFoundException("Chat");
     }
 
+    /**
+     * Check login details
+     * @param conn
+     * @param username The username
+     * @param password The password
+     * @return True if login successful, false otherwise
+     * @throws SQLException
+     */
+    public static boolean login(Connection conn, String username, String password) throws SQLException {
+        final String login = "SELECT count(*) as num from Person where pid = ? and password = ?";
 
+        PreparedStatement ps = conn.prepareStatement(login);
+        ps.setString(1,username);
+        ps.setString(2,password);
+
+        ResultSet rs = ps.executeQuery();
+
+        rs.next();
+        return rs.getInt("num") != 0;
+    }
     /**
      * Closes the connection. Automatically called if used in a try-with-resources
      * block. Otherwise, must be called manually.

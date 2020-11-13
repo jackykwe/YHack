@@ -41,21 +41,24 @@ class InitTutorInfoFragment : Fragment() {
                 val pricePerHour = binding.pricePerHourEditText.text.trim().toString()
                 findNavController().apply {
                     if (currentDestination?.id == R.id.initTutorInfoFragment) {
-                        navigate(InitTutorInfoFragmentDirections.actionInitTutorInfoFragmentToInitTutorVerifyFragment(
-                            tutor = args.tutor.apply {
-                                this.name = "$firstName $lastName"
-                                this.dob =
-                                    Date(System.currentTimeMillis())  // TODO: current dateOfBirth field isn't checked for valid date
-                                this.gender = gender
-                                this.school = school
-                                this.academics = mrExamGrades
-                                this.isFulltime = try {
-                                    Integer.valueOf(pricePerHour) > 0
-                                } catch (e: Exception) {
-                                    false
-                                }  // TODO: replace with a more legit test
-                            }
-                        ))
+                        navigate(
+                            InitTutorInfoFragmentDirections.actionInitTutorInfoFragmentToInitInfoPart2Fragment(
+                                person = args.tutor.apply {
+                                    this.name = "$firstName $lastName"
+                                    this.dob =
+                                        Date(System.currentTimeMillis())  // TODO: current dateOfBirth field isn't checked for valid date
+                                    this.gender = gender
+                                    this.school = school
+                                    this.academics = mrExamGrades
+                                    this.isFulltime = try {
+                                        Integer.valueOf(pricePerHour) > 0
+                                    } catch (e: Exception) {
+                                        false
+                                    }  // TODO: replace with a more legit test
+                                },
+                                isTutor = true
+                            )
+                        )
                     }
                 }
             }

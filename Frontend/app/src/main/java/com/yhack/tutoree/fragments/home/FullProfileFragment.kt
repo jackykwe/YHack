@@ -1,4 +1,4 @@
-package com.yhack.tutoree.fragments
+package com.yhack.tutoree.fragments.home
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -8,11 +8,11 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.yhack.tutoree.R
-import com.yhack.tutoree.databinding.FragmentFilterBinding
+import com.yhack.tutoree.databinding.FragmentFullProfileBinding
 
 class FullProfileFragment : Fragment() {
 
-    private lateinit var binding: FragmentFilterBinding
+    private lateinit var binding: FragmentFullProfileBinding
     private val args: FullProfileFragmentArgs by navArgs()
 
     override fun onCreateView(
@@ -20,7 +20,7 @@ class FullProfileFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        binding = FragmentFilterBinding.inflate(inflater, container, false)
+        binding = FragmentFullProfileBinding.inflate(inflater, container, false)
         return binding.root
     }
 

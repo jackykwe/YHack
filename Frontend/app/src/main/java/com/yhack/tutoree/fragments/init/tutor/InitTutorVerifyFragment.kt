@@ -25,7 +25,7 @@ class InitTutorVerifyFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        binding.mainTextView.text = "Upload your documents"
+        binding.mainTextView.text = "Submit"
         binding.firstButton.apply {
             text = "Upload"
             setOnClickListener {

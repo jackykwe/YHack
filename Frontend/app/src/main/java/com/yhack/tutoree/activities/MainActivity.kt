@@ -13,7 +13,6 @@ import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.yhack.tutoree.R
 import com.yhack.tutoree.database.ImportDBFromAssets
-import com.yhack.tutoree.database.model.Academics
 import com.yhack.tutoree.databinding.ActivityMainBinding
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -21,7 +20,6 @@ import java.sql.Connection
 import java.sql.Driver
 import java.sql.DriverManager
 import java.sql.SQLException
-import java.util.*
 
 class Keys private constructor() {
     companion object {
@@ -104,6 +102,7 @@ class MainActivity : AppCompatActivity() {
                 R.id.initIAmADeclarationFragment,
                 R.id.initTutorInfoFragment, R.id.initTutorVerifyFragment,
                 R.id.initTuteeInfoFragment,
+                R.id.initInfoPart2Fragment,
                 R.id.initMBTIQuestionsFragment, R.id.initMBTIResultFragment,
                 R.id.initSubjectCheckboxFragment, R.id.initExitFragment -> View.GONE
 //                R.id.filterFragment -> View.GONE

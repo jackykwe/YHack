@@ -109,16 +109,16 @@
         android:name="com.yhack.tutoree.fragments.init.tutor.InitTutorInfoFragment"
         android:label="Personal Information"
         tools:layout="@layout/fragment_init_tutor_info">
-        <action
-            android:id="@+id/action_initTutorInfoFragment_to_initTutorVerifyFragment"
-            app:destination="@id/initTutorVerifyFragment" />
         <argument
             android:name="tutor"
             app:argType="com.yhack.tutoree.database.model.Tutor" />
+        <action
+            android:id="@+id/action_initTutorInfoFragment_to_initInfoPart2Fragment"
+            app:destination="@id/initInfoPart2Fragment" />
     </fragment>
     <fragment
         android:id="@+id/fullProfileFragment"
-        android:name="com.yhack.tutoree.fragments.FullProfileFragment"
+        android:name="com.yhack.tutoree.fragments.home.FullProfileFragment"
         android:label="Full Profile: Insert Name"
         tools:layout="@layout/fragment_full_profile">
         <action
@@ -184,14 +184,12 @@
         android:name="com.yhack.tutoree.fragments.init.tutee.InitTuteeInfoFragment"
         android:label="Personal Information"
         tools:layout="@layout/fragment_init_tutee_info">
-        <action
-            android:id="@+id/action_initTuteeInfoFragment_to_initMBTIQuestionsFragment"
-            app:destination="@id/initMBTIQuestionsFragment"
-            app:popUpTo="@id/initIAmADeclarationFragment"
-            app:popUpToInclusive="false" />
         <argument
             android:name="tutee"
             app:argType="com.yhack.tutoree.database.model.Student" />
+        <action
+            android:id="@+id/action_initTuteeInfoFragment_to_initInfoPart2Fragment"
+            app:destination="@id/initInfoPart2Fragment" />
     </fragment>
     <fragment
         android:id="@+id/initMBTIResultFragment"
@@ -253,4 +251,24 @@
             android:name="isTutor"
             app:argType="boolean" />
     </dialog>
+    <fragment
+        android:id="@+id/initInfoPart2Fragment"
+        android:name="com.yhack.tutoree.fragments.init.InitInfoPart2Fragment"
+        android:label="InitInfoPart2Fragment"
+        tools:layout="@layout/fragment_init_info_part2">
+        <action
+            android:id="@+id/action_initInfoPart2Fragment_to_initTutorVerifyFragment"
+            app:destination="@id/initTutorVerifyFragment" />
+        <action
+            android:id="@+id/action_initInfoPart2Fragment_to_initMBTIQuestionsFragment"
+            app:destination="@id/initMBTIQuestionsFragment"
+            app:popUpTo="@id/initIAmADeclarationFragment"
+            app:popUpToInclusive="false" />
+        <argument
+            android:name="person"
+            app:argType="com.yhack.tutoree.database.model.Person" />
+        <argument
+            android:name="isTutor"
+            app:argType="boolean" />
+    </fragment>
 </navigation>

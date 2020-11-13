@@ -62,7 +62,7 @@ class InitTuteeInfoFragment : Fragment() {
                 findNavController().apply {
                     if (currentDestination?.id == R.id.initTuteeInfoFragment) {
                         navigate(
-                            InitTuteeInfoFragmentDirections.actionInitTuteeInfoFragmentToInitMBTIQuestionsFragment(
+                            InitTuteeInfoFragmentDirections.actionInitTuteeInfoFragmentToInitInfoPart2Fragment(
                                 isTutor = false,
                                 person = args.tutee.apply {
                                     this.name = "$firstName $lastName"

@@ -143,11 +143,6 @@ class InitMBTIQuestionsFragment : Fragment() {
                     if (responses.all { entry -> entry.value != null }) {
 
                         responsesToPersonality()
-//                        Snackbar.make(
-//                            binding.root,
-//                            MBTI.toString(),
-//                            Snackbar.LENGTH_SHORT
-//                        ).show()
                         findNavController().apply {
                             if (currentDestination?.id == R.id.initMBTIQuestionsFragment) {
                                 navigate(

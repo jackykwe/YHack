@@ -1,11 +1,15 @@
 package com.yhack.tutoree.model
 
 import android.content.res.AssetManager
+import com.yhack.tutoree.database.model.Person
 
 class GradeModel(assetManager: AssetManager) : Model(assetManager, "gradeModel.tflite") {
     override val inputSize: Int = 18
     override val outputSize: Int = 8
 
+    fun predict(person : Person) {
+
+    }
 /*
 predict(input) takes a FloatArray input
 

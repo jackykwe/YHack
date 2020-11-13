@@ -1,4 +1,4 @@
-# Tutoree - Private tuition platform with no middleman charges
+# Tutoree - Pairing students and teachers with AI
 
 __YHack Project 2020__
 

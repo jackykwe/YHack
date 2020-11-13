@@ -49,9 +49,7 @@
             app:popUpToInclusive="true" />
         <action
             android:id="@+id/action_signUpFragment_to_initIAmADeclarationFragment"
-            app:destination="@id/initIAmADeclarationFragment"
-            app:popUpTo="@id/nav_graph"
-            app:popUpToInclusive="true" />
+            app:destination="@id/initIAmADeclarationFragment" />
     </fragment>
     <fragment
         android:id="@+id/startUpFragment"

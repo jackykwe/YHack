@@ -28,8 +28,15 @@ class LoginFragment : Fragment() {
                 Database.getStudentByID(conn, username) ?: throw EntityNotFoundException("student")
                 false
             } catch (e: EntityNotFoundException) {
-                throw IllegalStateException("User login succeeded but is neither a tutor or student")
+                throw IllegalStateException("Person not found in database.")
             }
+        }
+
+        fun userExists(conn: Connection, username: String): Boolean = try {
+            isTutor(conn, username)
+            true
+        } catch (e: IllegalStateException) {
+            false
         }
     }
 

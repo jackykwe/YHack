@@ -22,11 +22,10 @@ class InitMBTIQuestionsFragment : Fragment() {
 //    results are saved as a string of a 4 bit integer
     var MBTI : Int = 0
 
-    fun responsesToPersonality() {
-        for(i in 1..4)
+    private fun responsesToPersonality() {
+        for (i in 1..4)
             MBTI = MBTI or ((responses[i]?.minus(1) ?: 0) shl (i - 1))
     }
-
 
     private val responses = mutableMapOf<Int, Int?>(
         1 to null,
@@ -126,21 +125,17 @@ class InitMBTIQuestionsFragment : Fragment() {
 
             q4TextView.apply {
                 visibility = View.VISIBLE
-                text =
-                    "4th option"
+                text = "Do you spend more time indoors or outdoors?"
             }
             q4LinearLayout.visibility = View.VISIBLE
             q4aButton.apply {
-                text =
-                    "Choice 1"
-                setOnClickListener { toggleButtons(4, 1, this, q3bButton) }
+                text = "Indoors"
+                setOnClickListener { toggleButtons(4, 1, this, q4bButton) }
             }
             q4bButton.apply {
-                text =
-                    "choice 2"
-                setOnClickListener { toggleButtons(4, 2, q3aButton, this) }
+                text = "Outodors"
+                setOnClickListener { toggleButtons(4, 2, q4aButton, this) }
             }
-
 
             firstButton.apply {
                 text = "Submit"

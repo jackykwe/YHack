@@ -2,8 +2,10 @@ package com.yhack.tutoree.database.model;
 // package uk.ac.cam.jk810.yhack20.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -11,47 +13,53 @@ import java.util.Map;
  */
 // implements Serializable to allow for use of this class in SafeArgs
 public class Person implements Serializable {
-    String username;
     /**
      * userid
      */
-    String password;
+    String username;
     /**
      * hashed password
      */
-    String name;
+    String password;
     /**
      * full name
      */
-    String gender;
+    String name;
     /**
      * gender of the person
      */
-    Date dob;
+    String gender;
     /**
      * date of birth
      */
-    boolean verified;
+    Date dob;
     /**
      * whether the person has verified their identity
      */
-    String school;
+    boolean verified;
     /**
      * school last studied at
      */
-    int personality;
+    String school;
     /**
      * 4-bits storing MBTI result
      */
-    String academics;
+    int personality;
     /**
      * JSON string storing academic results
+     */
+    String academics;
+    /**
+     * {@link Map} of subject to ML-generated ability score
      */
     Map<String, Double> ability = new HashMap<>();
 
     /**
-     * {@link Map} of subject to ML-generated ability score
+     * Subjects that the person is offering to teach/learn
      */
+    List<String> offering = new ArrayList<String>();
+
+
 
     public Person(String username, String name, String gender, Date dob, boolean verified, String school, int personality,
                   String academics) {
@@ -230,4 +238,12 @@ public class Person implements Serializable {
         this.password = password;
     }
 
+
+    public List<String> getOffering() {
+        return offering;
+    }
+
+    public void setOffering(List<String> offering) {
+        this.offering = offering;
+    }
 }

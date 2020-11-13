@@ -29,6 +29,7 @@ public class Database implements AutoCloseable {
     private static final String getName = "SELECT * FROM %s NATURAL JOIN Person where name like ?";
     private static final String getRating = "SELECT tid as pid, avg(rating) as rating FROM Teaches where tid = ?";
     private static final String getSubject = "SELECT * FROM Ability NATURAL JOIN Subject where pid = ?";
+    private static final String getOffering = "SELECT * FROM Offering NATURAL JOIN Subject where pid = ?";
     private static final SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
     @Deprecated
     private Connection conn;
@@ -166,6 +167,15 @@ public class Database implements AutoCloseable {
                 while (rs2.next()) {
                     result.setRating(rs2.getDouble("rating"));
                 }
+
+                ps = conn.prepareStatement(Database.getOffering);
+                ps.setString(1, result.getUsername());
+
+                rs2 = ps.executeQuery();
+                while (rs2.next()) {
+                    result.getOffering().add(rs2.getString("title"));
+                }
+
             }
             ArrayList<Tutor> results = new ArrayList<>();
             for (String pid : pids) {
@@ -202,6 +212,14 @@ public class Database implements AutoCloseable {
                     result.getAbility().put(rs2.getString("title"), rs2.getDouble("score"));
                 }
                 map.put(result.getUsername(), result);
+
+                ps = conn.prepareStatement(Database.getOffering);
+                ps.setString(1, result.getUsername());
+
+                rs2 = ps.executeQuery();
+                while (rs2.next()) {
+                    result.getOffering().add(rs2.getString("title"));
+                }
             }
             ArrayList<Student> results = new ArrayList<>();
             for (String pid : pids) {
@@ -230,9 +248,9 @@ public class Database implements AutoCloseable {
      * @throws SQLException
      */
     public static ArrayList<Tutor> getTopFilteredTutors(Connection conn, Map<String, Double> abilityScores, Double threshold, String gender,
-                                                        String school, Boolean fulltime, int limit) throws SQLException {
+                                                        String school, Boolean fulltime, int limit, List<String> offering) throws SQLException {
         String baseQuery = "SELECT * FROM Tutor NATURAL JOIN Person";
-        String abilityJoin = "JOIN ability as a%d using (pid) join subject as s%d on a%d.sid = s%d.sid";
+        String abilityJoin = "JOIN ability as a%d using (pid) join subject as s%d on a%d.sid = s%d.sid JOIN offering as o%d on Person.pid = o%d.pid and o%d.sid = s%d.sid";
         String subjectFilter = "s%d.title = ? and abs(a%d.score - ?)<?";
         String genderFilter = "gender = ?";
         String fulltimeFilter = "fulltime = ?";
@@ -241,7 +259,7 @@ public class Database implements AutoCloseable {
 
         String query = baseQuery;
         for (int i = 0; i < abilityScores.size(); i++) {
-            query += " " + String.format(abilityJoin, i, i, i, i);
+            query += " " + String.format(abilityJoin, i, i, i, i, i, i, i, i);
         }
 
         query += " where ";
@@ -335,7 +353,7 @@ public class Database implements AutoCloseable {
     public static ArrayList<Student> getTopFilteredStudents(Connection conn, Map<String, Double> abilityScores, Double threshold, String gender,
                                                             String school, int limit) throws SQLException {
         String baseQuery = "SELECT * FROM Student NATURAL JOIN Person";
-        String abilityJoin = "JOIN ability as a%d using (pid) join subject as s%d on a%d.sid = s%d.sid";
+        String abilityJoin = "JOIN ability as a%d using (pid) join subject as s%d on a%d.sid = s%d.sid JOIN offering as o%d on Person.pid = o%d.pid and o%d.sid = s%d.sid";
         String subjectFilter = "s%d.title = ? and abs(a%d.score - ?)<?";
         String genderFilter = "gender = ?";
         String schoolFilter = "school = ?";
@@ -343,7 +361,7 @@ public class Database implements AutoCloseable {
 
         String query = baseQuery;
         for (int i = 0; i < abilityScores.size(); i++) {
-            query += " " + String.format(abilityJoin, i, i, i, i);
+            query += " " + String.format(abilityJoin, i, i, i, i, i, i, i, i);
         }
 
         query += " where ";
@@ -558,6 +576,7 @@ public class Database implements AutoCloseable {
             for (Entry<String, Double> score : p.getAbility().entrySet()) {
                 addAbilities(conn, p, score.getKey(), score.getValue());
             }
+            updateOffering(conn, p);
 
             conn.commit();
 
@@ -612,6 +631,28 @@ public class Database implements AutoCloseable {
 
         ps.executeUpdate();
     }
+
+    protected static void updateOffering(Connection conn, Person p) throws SQLException {
+        final String insertOffering = "INSERT OR IGNORE INTO Offering SELECT ?, sid from Subject where title = ?";
+        PreparedStatement ps = conn.prepareStatement(insertOffering);
+
+        for (String subject : p.getOffering()) {
+            ps.setString(1, p.getUsername());
+            ps.setString(2, subject);
+        }
+
+        ps.executeUpdate();
+
+        final String deleteOffering = "DELETE FROM Offering where pid = ? and sid not in (SELECT sid FROM Subject where title in (%s))";
+        ps = conn.prepareStatement(String.format(deleteOffering, String.join(",", p.getOffering().stream().map(x -> "?").collect(Collectors.toList()))));
+
+        for (int i = 1; i<=p.getOffering().size();i++) {
+            ps.setString(i,p.getOffering().get(i-1));
+        }
+
+        ps.executeUpdate();
+    }
+
 
     /**
      * Closes the connection. Automatically called if used in a try-with-resources

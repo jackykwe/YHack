@@ -1,5 +1,6 @@
 package com.yhack.tutoree.fragments.init
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.yhack.tutoree.R
 import com.yhack.tutoree.databinding.FragmentInitMbtiQuestionsBinding
 
+@SuppressLint("NewApi")
 class InitMBTIQuestionsFragment : Fragment() {
 
     private lateinit var binding: FragmentInitMbtiQuestionsBinding
@@ -120,7 +122,8 @@ class InitMBTIQuestionsFragment : Fragment() {
                             if (currentDestination?.id == R.id.initMBTIQuestionsFragment) {
                                 navigate(
                                     InitMBTIQuestionsFragmentDirections.actionInitMBTIQuestionsFragmentToInitMBTIResultFragment(
-                                        isTutor = args.isTutor
+                                        isTutor = args.isTutor,
+                                        person = args.person
                                     )
                                 )
                             }

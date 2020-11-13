@@ -6,12 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.yhack.tutoree.R
 import com.yhack.tutoree.databinding.FragmentInitTutorVerifyBinding
 
 class InitTutorVerifyFragment : Fragment() {
 
     private lateinit var binding: FragmentInitTutorVerifyBinding
+    private val args: InitTutorVerifyFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -31,7 +33,10 @@ class InitTutorVerifyFragment : Fragment() {
                     if (currentDestination?.id == R.id.initTutorVerifyFragment) {
                         navigate(
                             InitTutorVerifyFragmentDirections.actionInitTutorVerifyFragmentToInitMBTIQuestionsFragment(
-                                isTutor = true
+                                isTutor = true,
+                                person = args.tutor.apply {
+                                    this.isVerified = true
+                                }
                             )
                         )
                     }

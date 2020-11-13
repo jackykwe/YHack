@@ -21,11 +21,12 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:backgroundTint="@android:color/holo_orange_light"
+        android:backgroundTint="@android:color/white"
         android:clickable="true"
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:minHeight="72dp"
+        android:onClick="@{() -> onClickListener.onClick(personCV, pid)}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -36,29 +37,69 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/personCardHeader"
+            <FrameLayout
+                android:id="@+id/personCardFL"
                 android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_marginBottom="8dp"
-                android:layout_weight="1"
-                android:gravity="center_vertical"
-                android:onClick="@{() -> onClickListener.onClick(personCardHeader, pid)}"
-                android:paddingHorizontal="8dp"
-                android:text="@{`ID: ` + pid}"
-                tools:text="ID: 123" />
+                android:layout_height="match_parent">
 
-            <View
-                android:id="@+id/divider"
-                android:layout_width="match_parent"
-                android:layout_height="1dp"
-                android:background="?android:attr/listDivider" />
+                <ImageView
+                    android:id="@+id/heartImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:srcCompat="@drawable/mdi_heart_red" />
+
+                <ImageView
+                    android:id="@+id/profilePictureImageView"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_gravity="center"
+                    android:layout_margin="8dp"
+                    app:srcCompat="@drawable/mdi_emoticon_cool_outline" />
+            </FrameLayout>
 
             <LinearLayout
                 android:id="@+id/personCardMain"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical" />
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/nameTextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:paddingHorizontal="8dp"
+                    android:text="@{`Name: ` + pid}"
+                    android:textSize="16sp"
+                    tools:text="Name: 123" />
+
+                <TextView
+                    android:id="@+id/description1TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:paddingHorizontal="8dp"
+                    android:text="@{`Name: ` + pid}"
+                    android:textColor="@android:color/black"
+                    android:textSize="12sp"
+                    tools:text="Name: 123" />
+
+                <TextView
+                    android:id="@+id/description2TextView"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginVertical="4dp"
+                    android:layout_weight="1"
+                    android:gravity="center"
+                    android:paddingHorizontal="8dp"
+                    android:text="@{`Name: ` + pid}"
+                    android:textSize="12sp"
+                    tools:text="Name: 123" />
+            </LinearLayout>
 
         </LinearLayout>
     </com.google.android.material.card.MaterialCardView>

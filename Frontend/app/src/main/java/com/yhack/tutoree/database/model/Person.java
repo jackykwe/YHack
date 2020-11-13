@@ -1,6 +1,7 @@
 package com.yhack.tutoree.database.model;
 // package uk.ac.cam.jk810.yhack20.model;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,7 +9,8 @@ import java.util.Map;
 /**
  * Stores details about a person
  */
-public class Person {
+// implements Serializable to allow for use of this class in SafeArgs
+public class Person implements Serializable {
     String username;
     /**
      * userid

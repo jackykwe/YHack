@@ -4,15 +4,21 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.yhack.tutoree.R
+import com.yhack.tutoree.database.model.Student
+import com.yhack.tutoree.database.model.Tutor
 import com.yhack.tutoree.databinding.FragmentInitIAmADeclarationBinding
 
 class InitIAmADeclarationFragment : Fragment() {
 
     private lateinit var binding: FragmentInitIAmADeclarationBinding
+    private val args: InitIAmADeclarationFragmentArgs by navArgs()
+
+    private fun generateTutor(): Tutor = Tutor(args.person.username, args.person.password)
+    private fun generateTutee(): Student = Student(args.person.username, args.person.password)
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,10 +34,13 @@ class InitIAmADeclarationFragment : Fragment() {
         binding.firstButton.apply {
             text = "Tutor"
             setOnClickListener {
-                Toast.makeText(requireContext(), "You selected Tutor", Toast.LENGTH_SHORT).show()
                 findNavController().apply {
                     if (currentDestination?.id == R.id.initIAmADeclarationFragment) {
-                        navigate(InitIAmADeclarationFragmentDirections.actionInitIAmADeclarationFragmentToInitTutorInfoFragment())
+                        navigate(
+                            InitIAmADeclarationFragmentDirections.actionInitIAmADeclarationFragmentToInitTutorInfoFragment(
+                                tutor = generateTutor()
+                            )
+                        )
                     }
                 }
             }
@@ -40,10 +49,13 @@ class InitIAmADeclarationFragment : Fragment() {
         binding.secondButton.apply {
             text = "Tutee"
             setOnClickListener {
-                Toast.makeText(requireContext(), "You selected Tutee", Toast.LENGTH_SHORT).show()
                 findNavController().apply {
                     if (currentDestination?.id == R.id.initIAmADeclarationFragment) {
-                        navigate(InitIAmADeclarationFragmentDirections.actionInitIAmADeclarationFragmentToInitTuteeInfoFragment())
+                        navigate(
+                            InitIAmADeclarationFragmentDirections.actionInitIAmADeclarationFragmentToInitTuteeInfoFragment(
+                                tutee = generateTutee()
+                            )
+                        )
                     }
                 }
             }

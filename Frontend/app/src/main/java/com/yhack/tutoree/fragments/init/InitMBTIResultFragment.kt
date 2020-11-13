@@ -36,7 +36,8 @@ class InitMBTIResultFragment : Fragment() {
                     if (currentDestination?.id == R.id.initMBTIResultFragment) {
                         navigate(
                             InitMBTIResultFragmentDirections.actionInitMBTIResultFragmentToInitSubjectCheckboxFragment(
-                                isTutor = args.isTutor
+                                isTutor = args.isTutor,
+                                person = args.person
                             )
                         )
                     }

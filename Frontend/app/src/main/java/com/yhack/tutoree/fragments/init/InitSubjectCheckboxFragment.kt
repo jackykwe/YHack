@@ -10,6 +10,11 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.snackbar.Snackbar
 import com.yhack.tutoree.R
+import com.yhack.tutoree.activities.MainActivity
+import com.yhack.tutoree.database.Database
+import com.yhack.tutoree.database.model.Person
+import com.yhack.tutoree.database.model.Student
+import com.yhack.tutoree.database.model.Tutor
 import com.yhack.tutoree.databinding.FragmentInitSubjectCheckboxBinding
 
 class InitSubjectCheckboxFragment : Fragment() {
@@ -42,6 +47,23 @@ class InitSubjectCheckboxFragment : Fragment() {
         }
     }
 
+    private fun saveToDatabase() {
+        val personUpdated: Person = if (args.isTutor) {
+            // Tutor logic
+            (args.person as Tutor).apply {
+                // TODO: save the declared subjects to the object when the new field is ready
+            }
+        } else {
+            // Tutee logic
+            (args.person as Student).apply {
+                // TODO: save the declared subjects to the object when the new field is ready
+            }
+        }
+        val connection = (requireActivity() as MainActivity).connection
+        Database.registerPerson(connection, personUpdated)
+        Database.modifyPerson(connection, personUpdated)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         val splitText = if (args.isTutor) "can you teach?" else "do you need help with?"
         binding.mainTextView.text = "What subjects\n$splitText"
@@ -66,6 +88,8 @@ class InitSubjectCheckboxFragment : Fragment() {
                         Snackbar.LENGTH_SHORT
                     ).show()
                 } else {
+                    // Save to database
+                    saveToDatabase()
                     findNavController().apply {
                         if (currentDestination?.id == R.id.initSubjectCheckboxFragment) {
                             navigate(

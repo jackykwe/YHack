@@ -4,7 +4,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import com.yhack.tutoree.R
@@ -13,7 +12,7 @@ import com.yhack.tutoree.databinding.FragmentSignUpBinding
 
 class SignUpFragment : Fragment() {
 
-    lateinit var person : Person
+    lateinit var person: Person
 
     private lateinit var binding: FragmentSignUpBinding
 
@@ -26,26 +25,23 @@ class SignUpFragment : Fragment() {
         return binding.root
     }
 
-    fun updatePerson() {
-        person = Person(binding.usernameEditText.text.toString(), binding.passwordEditText.text.toString())
-//        println(binding.usernameEditText.text)
-//        println(binding.passwordEditText.text)
-    }
-
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.mainTextView.text = "Sign Up"
         binding.firstButton.apply {
             text = "Sign Up"
             setOnClickListener {
-                updatePerson()
-                Toast.makeText(
-                    requireContext(),
-                    "Email: ${binding.usernameEditText.text} and Password: ${binding.passwordEditText.text}",
-                    Toast.LENGTH_SHORT
-                ).show()
+                val username = binding.usernameEditText.text.toString()
+                val password = binding.usernameEditText.text.toString()
                 findNavController().apply {
                     if (currentDestination?.id == R.id.signUpFragment) {
-                        navigate(SignUpFragmentDirections.actionSignUpFragmentToInitIAmADeclarationFragment())
+                        navigate(
+                            SignUpFragmentDirections.actionSignUpFragmentToInitIAmADeclarationFragment(
+                                // This will only go into the DB right before the user leaves InitSubjectCheckboxFragment
+                                // so we require the user to fully go through the sign up process first
+                                // (at least for now; since this is easier to implement - we don't need to track sign up progress)
+                                person = Person(username, password)
+                            )
+                        )
                     }
                 }
             }

@@ -1,9 +1,11 @@
 package com.yhack.tutoree.database.model;
 // package uk.ac.cam.jk810.yhack20.model;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class Student extends Person {
+// implements Serializable to allow for use of this class in SafeArgs
+public class Student extends Person implements Serializable {
     boolean optin;
 
     /**

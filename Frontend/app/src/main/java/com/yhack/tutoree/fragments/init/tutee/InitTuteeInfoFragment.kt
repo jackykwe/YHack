@@ -6,14 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import androidx.navigation.fragment.navArgs
 import com.yhack.tutoree.R
-import com.yhack.tutoree.database.model.Student
-import com.yhack.tutoree.database.model.Tutor
 import com.yhack.tutoree.databinding.FragmentInitTuteeInfoBinding
-import com.yhack.tutoree.fragments.login.SignUpFragment
+import java.util.*
 
 class InitTuteeInfoFragment : Fragment() {
     private lateinit var binding: FragmentInitTuteeInfoBinding
+    private val args: InitTuteeInfoFragmentArgs by navArgs()
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,14 +28,30 @@ class InitTuteeInfoFragment : Fragment() {
         binding.mainTextView.text = "Personal Information"
         binding.firstButton.apply {
             text = "Submit"
-            var student : Student
-
             setOnClickListener {
+                val firstName = binding.firstNameEditText.text.trim().toString()
+                val lastName = binding.lastNameEditText.text.trim().toString()
+                val address = binding.addressEditText.text.trim()
+                    .toString()  // TODO: Not yet saved in database
+                val dateOfBirth = binding.dobEditText.text.trim().toString()
+                val gender = binding.genderEditText.text.trim().toString()
+                val school = binding.schoolEditText.text.trim().toString()
+                val mrExamGrades = binding.mostRecentExamGradesEditText.text.trim().toString()
+                val consent = binding.consentCheckBox.isChecked
                 findNavController().apply {
                     if (currentDestination?.id == R.id.initTuteeInfoFragment) {
                         navigate(
                             InitTuteeInfoFragmentDirections.actionInitTuteeInfoFragmentToInitMBTIQuestionsFragment(
-                                isTutor = false
+                                isTutor = false,
+                                person = args.tutee.apply {
+                                    this.name = "$firstName $lastName"
+                                    this.dob =
+                                        Date(System.currentTimeMillis())  // TODO: current dateOfBirth field isn't checked for valid date
+                                    this.gender = gender
+                                    this.school = school
+                                    this.academics = mrExamGrades
+                                    this.isOptin = consent
+                                }
                             )
                         )
                     }

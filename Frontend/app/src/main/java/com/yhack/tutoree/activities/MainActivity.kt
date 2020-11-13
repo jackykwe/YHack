@@ -91,8 +91,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.initTutorInfoFragment, R.id.initTutorVerifyFragment,
                 R.id.initTuteeInfoFragment,
                 R.id.initMBTIQuestionsFragment, R.id.initMBTIResultFragment,
-                R.id.initSubjectCheckboxFragment, R.id.initExitFragment,
-                R.id.filterFragment -> View.GONE
+                R.id.initSubjectCheckboxFragment, R.id.initExitFragment -> View.GONE
+//                R.id.filterFragment -> View.GONE
                 else -> View.VISIBLE
             }
         }

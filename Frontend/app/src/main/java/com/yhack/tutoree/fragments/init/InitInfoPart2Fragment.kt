@@ -73,10 +73,10 @@ class InitInfoPart2Fragment : Fragment() {
                             )
                         } else {
                             navigate(
-                                u InitInfoPart2FragmentDirections . actionInitInfoPart2FragmentToInitMBTIQuestionsFragment (
-                                        isTutor = false,
-                                person = args.person as Student
-                            )
+                                InitInfoPart2FragmentDirections.actionInitInfoPart2FragmentToInitMBTIQuestionsFragment(
+                                    isTutor = false,
+                                    person = args.person as Student
+                                )
                             )
                         }
                     }

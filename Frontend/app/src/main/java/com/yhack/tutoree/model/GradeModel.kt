@@ -1,13 +1,31 @@
 package com.yhack.tutoree.model
 
 import android.content.res.AssetManager
+import com.yhack.tutoree.database.model.Academics
 import com.yhack.tutoree.database.model.Person
+import java.util.ArrayList
 
 class GradeModel(assetManager: AssetManager) : Model(assetManager, "gradeModel.tflite") {
     override val inputSize: Int = 18
     override val outputSize: Int = 8
 
     fun predict(person : Person) {
+        val academics : Academics = person.academicsObj
+        val gradesList : MutableMap<String, ArrayList<Int>>? = academics.grades
+        val activities : ArrayList<String> = academics.activities
+        val inputs : FloatArray = FloatArray(inputSize)
+
+        if (gradesList != null) {
+            var ctr = 0
+            for((key, value) in gradesList) {
+                /**
+                 * can scale grades using key, i.e. scale O-level grades down
+                 */
+                for(i in 0..7) {
+                    inputs[8 * ctr + i] = value[i].toFloat()
+                }
+            }
+        }
 
     }
 /*

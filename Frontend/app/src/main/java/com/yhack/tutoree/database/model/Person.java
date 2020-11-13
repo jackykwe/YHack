@@ -50,6 +50,13 @@ public class Person implements Serializable {
      */
     String academics;
     /**
+     * Academics object, stopgap for until database has been updated
+     */
+    Academics academicsObj;
+    List<String> interests;
+    List<String> activities;
+    Map<String, ArrayList<Integer>> grades;
+    /**
      * {@link Map} of subject to ML-generated ability score
      */
     Map<String, Double> ability = new HashMap<>();

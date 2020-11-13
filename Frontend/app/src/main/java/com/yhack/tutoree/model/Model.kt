@@ -23,7 +23,7 @@ open class Model(
 
     fun predict (input : FloatArray): FloatArray {
         if(input.size != inputSize) {
-            throw Exception("Input size is not correct lmao")
+            throw Exception("Input size is not correct")
         }
         val inputs : Array<FloatArray> = arrayOf( input.map{ it }.toFloatArray() )
         val outputs : Array<FloatArray> = arrayOf( FloatArray(outputSize))

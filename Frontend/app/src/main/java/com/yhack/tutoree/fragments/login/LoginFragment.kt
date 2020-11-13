@@ -1,18 +1,44 @@
 package com.yhack.tutoree.fragments.login
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
+import android.view.inputmethod.InputMethodManager
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
+import com.google.android.material.snackbar.Snackbar
 import com.yhack.tutoree.R
 import com.yhack.tutoree.activities.Keys
 import com.yhack.tutoree.activities.MainActivity
+import com.yhack.tutoree.database.Database
+import com.yhack.tutoree.database.model.dbexception.EntityNotFoundException
 import com.yhack.tutoree.databinding.FragmentLoginBinding
+import java.sql.Connection
 
 class LoginFragment : Fragment() {
+
+    companion object {
+        fun isTutor(conn: Connection, username: String) = try {
+            Database.getTutorByID(conn, username) ?: throw EntityNotFoundException("tutor")
+            true
+        } catch (e: EntityNotFoundException) {
+            try {
+                Database.getStudentByID(conn, username) ?: throw EntityNotFoundException("student")
+                false
+            } catch (e: EntityNotFoundException) {
+                throw IllegalStateException("Person not found in database.")
+            }
+        }
+
+        fun userExists(conn: Connection, username: String): Boolean = try {
+            isTutor(conn, username)
+            true
+        } catch (e: IllegalStateException) {
+            false
+        }
+    }
 
     private lateinit var binding: FragmentLoginBinding
 
@@ -25,24 +51,41 @@ class LoginFragment : Fragment() {
         return binding.root
     }
 
+    private fun proceed(username: String, isTutor: Boolean) {
+        findNavController().apply {
+            if (currentDestination?.id == R.id.loginFragment) {
+                (requireActivity() as MainActivity).sharedPreferences
+                    .edit()
+                    .putString(Keys.LOGGED_IN, username)
+                    .commit()
+                navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment(isTutor = isTutor))
+            }
+        }
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.mainTextView.text = "Log In"
         binding.firstButton.apply {
             text = "Log in"
             setOnClickListener {
-                Toast.makeText(
-                    requireContext(),
-                    "Email: ${binding.usernameEditText.text} and Password: ${binding.passwordEditText.text}",
-                    Toast.LENGTH_SHORT
-                ).show()
-                findNavController().apply {
-                    if (currentDestination?.id == R.id.loginFragment) {
-                        (requireActivity() as MainActivity).sharedPreferences
-                            .edit()
-                            .putInt(Keys.LOGGED_IN, 1)
-                            .commit()
-                        navigate(LoginFragmentDirections.actionLoginFragmentToHomeFragment(isTutor = true)) // TODO: Make flexible
-                    }
+                // Close the keyboard, if it's open
+                val imm = requireActivity().getSystemService(Context.INPUT_METHOD_SERVICE)
+                        as InputMethodManager
+                imm.hideSoftInputFromWindow(requireView().windowToken, 0)
+
+                val username = binding.usernameEditText.text.toString()
+                val password = binding.passwordEditText.text.toString()
+//                val person = Person(username, password)
+                val conn = (requireActivity() as MainActivity).connection!!
+                if (Database.login(conn, username, password)) {
+                    val isTutor = isTutor(conn, username)
+                    proceed(username, isTutor)
+                } else {
+                    Snackbar.make(
+                        binding.root,
+                        "Login failed. Please check your credentials.",
+                        Snackbar.LENGTH_SHORT
+                    ).show()
                 }
             }
         }

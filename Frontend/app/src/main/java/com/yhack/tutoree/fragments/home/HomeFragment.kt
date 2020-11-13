@@ -31,6 +31,9 @@ class HomeFragment : Fragment() {
     ): View? {
         binding = FragmentHomeBinding.inflate(inflater)
 
+        Toast.makeText(requireContext(), "You are tutor: ${args.isTutor}", Toast.LENGTH_SHORT)
+            .show()
+
         binding.homeRV.apply {
             setHasFixedSize(true)
             adapter = HomeRVAdapter(

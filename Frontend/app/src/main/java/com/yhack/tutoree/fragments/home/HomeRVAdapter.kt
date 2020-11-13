@@ -89,8 +89,8 @@ class HomeRVAdapter(private val itemOnClickListener: HomeOnClickListener) :
     }
 }
 
-class HomeOnClickListener(val clickListener: (view: View, username: String) -> Unit) {
-    fun onClick(view: View, username: String) = clickListener(view, username)
+class HomeOnClickListener(val clickListener: (view: View, person: Person) -> Unit) {
+    fun onClick(view: View, person: Person) = clickListener(view, person)
 }
 
 class HomeRVItemDiffCallback : DiffUtil.ItemCallback<HomeRVItem>() {

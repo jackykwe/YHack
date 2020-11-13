@@ -37,22 +37,21 @@ class HomeFragment : Fragment() {
         binding.homeRV.apply {
             setHasFixedSize(true)
             adapter = HomeRVAdapter(
-                itemOnClickListener = HomeOnClickListener { view, username ->
+                itemOnClickListener = HomeOnClickListener { _, person ->
                     findNavController().run {
-                        Toast.makeText(
-                            requireContext(),
-                            "You chose pid: ${username}.",
-                            Toast.LENGTH_SHORT
-                        ).show()
-//                        if (currentDestination?.id == R.id.homeFragment) {
-//                            navigate(
-//                                HomeFragmentDirections.actionHomeFragmentToFullProfileFragment()
-//                            )
-//                        }
+                        if (currentDestination?.id == R.id.homeFragment) {
+                            navigate(
+                                HomeFragmentDirections.actionHomeFragmentToFullProfileFragment(
+                                    loggedInUserIsTutor = args.isTutor,
+                                    personToDisplay = person
+                                )
+                            )
+                        }
                     }
                 }
             )
         }
+
         (binding.homeRV.adapter as HomeRVAdapter).submitList2(
             listOf(
                 Tutor(

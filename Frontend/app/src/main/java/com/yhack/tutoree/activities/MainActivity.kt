@@ -40,7 +40,7 @@ class MainActivity : AppCompatActivity() {
 //    }
 
     internal lateinit var sharedPreferences: SharedPreferences
-    private lateinit var mainActivityBinding: ActivityMainBinding
+    internal lateinit var mainActivityBinding: ActivityMainBinding
     private lateinit var navController: NavController
     private lateinit var appBarConfiguration: AppBarConfiguration
 

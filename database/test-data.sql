@@ -5,3 +5,4 @@
 .import --csv test-data/subject.csv Subject
 .import --csv test-data/ability.csv Ability
 .import --csv test-data/teaches.csv Teaches
+.import --csv test-data/offering.csv Offering

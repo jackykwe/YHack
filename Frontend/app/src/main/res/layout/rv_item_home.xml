@@ -24,7 +24,7 @@
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:minHeight="72dp"
-        android:onClick="@{() -> onClickListener.onClick(personCV, person.username)}"
+        android:onClick="@{() -> onClickListener.onClick(personCV, person)}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">

@@ -28,20 +28,20 @@ class ChatFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.mainTextView.text = "Chats"
-        binding.firstButton.apply {
-            text = "View full profile"
-            setOnClickListener {
-                findNavController().run {
-                    if (currentDestination?.id == R.id.chatFragment) {
-                        navigate(
-                            ChatFragmentDirections.actionChatFragmentToFullProfileFragment(
-                                isTutor = args.isTutor
-                            )
-                        )
-                    }
-                }
-            }
-        }
+//        binding.firstButton.apply {
+//            text = "View full profile"
+//            setOnClickListener {
+//                findNavController().run {
+//                    if (currentDestination?.id == R.id.chatFragment) {
+//                        navigate(
+//                            ChatFragmentDirections.actionChatFragmentToFullProfileFragment(
+//
+//                            )
+//                        )
+//                    }
+//                }
+//            }
+//        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {

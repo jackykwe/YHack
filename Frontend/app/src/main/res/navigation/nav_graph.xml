@@ -127,8 +127,11 @@
             app:popUpTo="@id/chatFragment"
             app:popUpToInclusive="true" />
         <argument
-            android:name="isTutor"
+            android:name="loggedInUserIsTutor"
             app:argType="boolean" />
+        <argument
+            android:name="personToDisplay"
+            app:argType="com.yhack.tutoree.database.model.Person" />
     </fragment>
     <fragment
         android:id="@+id/initTutorVerifyFragment"

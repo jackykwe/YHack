@@ -19,10 +19,20 @@ class InitMBTIQuestionsFragment : Fragment() {
     private lateinit var binding: FragmentInitMbtiQuestionsBinding
     private val args: InitMBTIQuestionsFragmentArgs by navArgs()
 
+//    results are saved as a string of a 4 bit integer
+    var MBTI : Int = 0
+
+    fun responsesToPersonality() {
+        for(i in 1..4)
+            MBTI = MBTI or ((responses[i]?.minus(1) ?: 0) shl (i - 1))
+    }
+
+
     private val responses = mutableMapOf<Int, Int?>(
         1 to null,
         2 to null,
-        3 to null
+        3 to null,
+        4 to null
     )
 
     override fun onCreateView(
@@ -114,16 +124,41 @@ class InitMBTIQuestionsFragment : Fragment() {
                 setOnClickListener { toggleButtons(3, 2, q3aButton, this) }
             }
 
+            q4TextView.apply {
+                visibility = View.VISIBLE
+                text =
+                    "4th option"
+            }
+            q4LinearLayout.visibility = View.VISIBLE
+            q4aButton.apply {
+                text =
+                    "Choice 1"
+                setOnClickListener { toggleButtons(4, 1, this, q3bButton) }
+            }
+            q4bButton.apply {
+                text =
+                    "choice 2"
+                setOnClickListener { toggleButtons(4, 2, q3aButton, this) }
+            }
+
+
             firstButton.apply {
                 text = "Submit"
                 setOnClickListener {
                     if (responses.all { entry -> entry.value != null }) {
+
+                        responsesToPersonality()
+//                        Snackbar.make(
+//                            binding.root,
+//                            MBTI.toString(),
+//                            Snackbar.LENGTH_SHORT
+//                        ).show()
                         findNavController().apply {
                             if (currentDestination?.id == R.id.initMBTIQuestionsFragment) {
                                 navigate(
                                     InitMBTIQuestionsFragmentDirections.actionInitMBTIQuestionsFragmentToInitMBTIResultFragment(
                                         isTutor = args.isTutor,
-                                        person = args.person
+                                        person = args.person.apply { personality = MBTI }
                                     )
                                 )
                             }

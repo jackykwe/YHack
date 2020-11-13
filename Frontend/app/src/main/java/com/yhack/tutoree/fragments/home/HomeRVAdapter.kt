@@ -6,6 +6,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.yhack.tutoree.database.model.Person
 import com.yhack.tutoree.databinding.RvItemEmptyBinding
 import com.yhack.tutoree.databinding.RvItemHomeBinding
 import kotlinx.coroutines.CoroutineScope
@@ -19,7 +20,7 @@ private const val PERSON = 1
 class HomeRVAdapter(private val itemOnClickListener: HomeOnClickListener) :
     ListAdapter<HomeRVItem, RecyclerView.ViewHolder>(HomeRVItemDiffCallback()) {
 
-    fun submitList2(pidList: List<Int>) {
+    fun submitList2(pidList: List<Person>) {
         CoroutineScope(Dispatchers.Default).launch {
             val submittable = if (pidList.isEmpty()) {
                 listOf(HomeRVItem.EmptyCard())
@@ -52,7 +53,7 @@ class HomeRVAdapter(private val itemOnClickListener: HomeOnClickListener) :
         when (holder) {
             is PersonViewHolder -> {
                 val item = getItem(position) as HomeRVItem.PersonCard
-                holder.rebind(item.pid, itemOnClickListener)
+                holder.rebind(item.person, itemOnClickListener)
             }
         }
     }
@@ -72,8 +73,8 @@ class HomeRVAdapter(private val itemOnClickListener: HomeOnClickListener) :
     class PersonViewHolder private constructor(private val binding: RvItemHomeBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun rebind(pid: Int, itemOnClickListener: HomeOnClickListener) {
-            binding.pid = pid
+        fun rebind(person: Person, itemOnClickListener: HomeOnClickListener) {
+            binding.person = person
             binding.onClickListener = itemOnClickListener
             binding.executePendingBindings()
         }
@@ -88,8 +89,8 @@ class HomeRVAdapter(private val itemOnClickListener: HomeOnClickListener) :
     }
 }
 
-class HomeOnClickListener(val clickListener: (view: View, pid: Int) -> Unit) {
-    fun onClick(view: View, pid: Int) = clickListener(view, pid)
+class HomeOnClickListener(val clickListener: (view: View, username: String) -> Unit) {
+    fun onClick(view: View, username: String) = clickListener(view, username)
 }
 
 class HomeRVItemDiffCallback : DiffUtil.ItemCallback<HomeRVItem>() {
@@ -109,13 +110,13 @@ class HomeRVItemDiffCallback : DiffUtil.ItemCallback<HomeRVItem>() {
 }
 
 sealed class HomeRVItem {
-    abstract val rvItemId: Int
+    abstract val rvItemId: String
 
-    data class PersonCard(val pid: Int) : HomeRVItem() {
-        override val rvItemId: Int = pid
+    data class PersonCard(val person: Person) : HomeRVItem() {
+        override val rvItemId: String = person.username
     }
 
     class EmptyCard : HomeRVItem() {
-        override val rvItemId: Int = Int.MIN_VALUE
+        override val rvItemId: String = ""
     }
 }

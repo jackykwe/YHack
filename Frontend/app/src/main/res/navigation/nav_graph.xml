@@ -19,6 +19,9 @@
         <argument
             android:name="isTutor"
             app:argType="boolean" />
+        <action
+            android:id="@+id/action_homeFragment_to_filterFragment"
+            app:destination="@id/filterFragment" />
     </fragment>
     <fragment
         android:id="@+id/loginFragment"
@@ -240,4 +243,13 @@
             android:name="isTutor"
             app:argType="boolean" />
     </fragment>
+    <dialog
+        android:id="@+id/filterFragment"
+        android:name="com.yhack.tutoree.fragments.home.FilterFragment"
+        android:label="FilterFragment"
+        tools:layout="@layout/fragment_filter">
+        <argument
+            android:name="isTutor"
+            app:argType="boolean" />
+    </dialog>
 </navigation>

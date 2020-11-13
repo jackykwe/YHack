@@ -8,8 +8,8 @@
         <import type="android.view.View" />
 
         <variable
-            name="pid"
-            type="Integer" />
+            name="person"
+            type="com.yhack.tutoree.database.model.Person" />
 
         <variable
             name="onClickListener"
@@ -26,7 +26,7 @@
         android:focusable="true"
         android:foreground="?android:attr/selectableItemBackground"
         android:minHeight="72dp"
-        android:onClick="@{() -> onClickListener.onClick(personCV, pid)}"
+        android:onClick="@{() -> onClickListener.onClick(personCV, person.username)}"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
@@ -46,15 +46,28 @@
                     android:id="@+id/heartImageView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_margin="8dp"
                     app:srcCompat="@drawable/mdi_heart_red" />
 
                 <ImageView
                     android:id="@+id/profilePictureImageView"
-                    android:layout_width="64dp"
-                    android:layout_height="64dp"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
                     android:layout_gravity="center"
                     android:layout_margin="8dp"
                     app:srcCompat="@drawable/mdi_emoticon_cool_outline" />
+
+                <ImageView
+                    android:id="@+id/onlineImageView"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_margin="8dp"
+                    android:translationX="32dp"
+                    android:translationY="8dp"
+                    android:visibility="visible"
+                    app:srcCompat="@drawable/online_circle"
+                    tools:visibility="visible" />
             </FrameLayout>
 
             <LinearLayout
@@ -70,35 +83,35 @@
                     android:layout_marginVertical="4dp"
                     android:layout_weight="1"
                     android:gravity="center"
+                    android:text="@{person.name}"
                     android:paddingHorizontal="8dp"
-                    android:text="@{`Name: ` + pid}"
+                    android:textColor="@android:color/black"
                     android:textSize="16sp"
                     tools:text="Name: 123" />
 
                 <TextView
-                    android:id="@+id/description1TextView"
+                    android:id="@+id/partFullTimeOrEdLevelTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="4dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:paddingHorizontal="8dp"
-                    android:text="@{`Name: ` + pid}"
-                    android:textColor="@android:color/black"
                     android:textSize="12sp"
-                    tools:text="Name: 123" />
+                    app:populateDescription1="@{person}"
+                    tools:text="PSLE [OR] Full Time" />
 
                 <TextView
-                    android:id="@+id/description2TextView"
+                    android:id="@+id/ratingOrFavouritedYouTextView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginVertical="4dp"
                     android:layout_weight="1"
                     android:gravity="center"
                     android:paddingHorizontal="8dp"
-                    android:text="@{`Name: ` + pid}"
                     android:textSize="12sp"
-                    tools:text="Name: 123" />
+                    app:populateDescription2="@{person}"
+                    tools:text="4.5 (135 reviews) [OR] Favourited you" />
             </LinearLayout>
 
         </LinearLayout>

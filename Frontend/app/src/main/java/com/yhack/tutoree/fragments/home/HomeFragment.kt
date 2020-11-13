@@ -11,11 +11,14 @@ import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.yhack.tutoree.R
-import com.yhack.tutoree.activities.MainActivity
+import com.yhack.tutoree.database.model.Student
+import com.yhack.tutoree.database.model.Tutor
 import com.yhack.tutoree.databinding.FragmentHomeBinding
+import java.util.*
 
 class HomeFragment : Fragment() {
     private lateinit var binding: FragmentHomeBinding
+    private val args: HomeFragmentArgs by navArgs()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         setHasOptionsMenu(true)
@@ -31,15 +34,11 @@ class HomeFragment : Fragment() {
         binding.homeRV.apply {
             setHasFixedSize(true)
             adapter = HomeRVAdapter(
-                itemOnClickListener = HomeOnClickListener { view, pid ->
+                itemOnClickListener = HomeOnClickListener { view, username ->
                     findNavController().run {
-
-                        (requireActivity() as MainActivity).connection
-
-
                         Toast.makeText(
                             requireContext(),
-                            "You chose pid: ${pid}.",
+                            "You chose pid: ${username}.",
                             Toast.LENGTH_SHORT
                         ).show()
 //                        if (currentDestination?.id == R.id.homeFragment) {
@@ -51,7 +50,43 @@ class HomeFragment : Fragment() {
                 }
             )
         }
-        (binding.homeRV.adapter as HomeRVAdapter).submitList2(listOf(1, 2, 3, 4, 56))
+        (binding.homeRV.adapter as HomeRVAdapter).submitList2(
+            listOf(
+                Tutor(
+                    "username",
+                    "Bob Harry",
+                    "male",
+                    Date(System.currentTimeMillis()),
+                    false,
+                    "Cam",
+                    1,
+                    "PSLE",
+                    true
+                ),
+                Student(
+                    "username",
+                    "Maybe Harry",
+                    "female",
+                    Date(System.currentTimeMillis()),
+                    false,
+                    "Cam",
+                    1,
+                    "O Level",
+                    true
+                ),
+                Tutor(
+                    "username",
+                    "Isla Harry",
+                    "female",
+                    Date(System.currentTimeMillis()),
+                    false,
+                    "Cam",
+                    1,
+                    "IB",
+                    true
+                )
+            )
+        )
 //        (binding.homeRV.adapter as HomeRVAdapter).submitList2(listOf())
         return binding.root
     }
@@ -98,7 +133,11 @@ class HomeFragment : Fragment() {
                 true
             }
             R.id.action_filter -> {
-//                findNavController().navigate(HomeFragmentDirections.actionHomeFragmentToChatFragment(args.isTutor))
+                findNavController().navigate(
+                    HomeFragmentDirections.actionHomeFragmentToFilterFragment(
+                        args.isTutor
+                    )
+                )
                 true
             }
             else -> super.onOptionsItemSelected(item)

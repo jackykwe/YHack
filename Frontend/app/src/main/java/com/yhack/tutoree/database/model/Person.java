@@ -201,6 +201,13 @@ public class Person implements Serializable {
         this.academics = academics;
     }
 
+    /**
+     * @param academics
+     * converts Academics to JSON string
+     */
+    public void setAcademics(Academics academics) {
+        this.academics = academics.toString();
+    }
 
     /**
      * @return Map<String, Double>
